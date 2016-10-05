@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.15",
-    "name": "angular2-first-test"
+    "name": "bitacoras-cdc-ng2"
   },
   "apps": [
     {
@@ -12,15 +12,16 @@
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
-      "prefix": "app",
+      "prefix": "mnx-bitacoras-cdc",
       "mobile": false,
       "styles": [
         "../node_modules/font-awesome/scss/font-awesome.scss",
-        "../node_modules/primeng/resources/themes/omega/theme.css",
-        "../node_modules/primeng/resources/primeng.min.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/bootstrap/dist/css/bootstrap-theme.min.css",
+        "assets/css/material/monex-material-theme.scss",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": ["../node_modules/hammerjs/hammer.min.js"],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

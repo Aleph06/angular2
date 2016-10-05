@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor/globals';
 
-export class Angular2FirstTestPage {
+export class BitacorasCdcNg2Page {
   navigateTo() {
     return browser.get('/');
   }

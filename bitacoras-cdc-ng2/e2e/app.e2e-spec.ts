@@ -1,10 +1,10 @@
-import { Angular2FirstTestPage } from './app.po';
+import { BitacorasCdcNg2Page } from './app.po';
 
-describe('angular2-first-test App', function() {
-  let page: Angular2FirstTestPage;
+describe('bitacoras-cdc-ng2 App', function() {
+  let page: BitacorasCdcNg2Page;
 
   beforeEach(() => {
-    page = new Angular2FirstTestPage();
+    page = new BitacorasCdcNg2Page();
   });
 
   it('should display message saying app works', () => {

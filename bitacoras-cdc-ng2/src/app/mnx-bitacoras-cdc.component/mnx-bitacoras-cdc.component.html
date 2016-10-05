@@ -1,0 +1,73 @@
+<div class="container-fluid">
+
+	<div class="row mnx-top"></div>
+
+	<div class="row mnx-center">
+
+		<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2 mnx-left"></div>
+
+		<div class="col-xs-10 col-sm-8 col-md-8 col-lg-8 mnx-center">
+
+			<md-toolbar color="primary">
+				<md-icon fontSet="fa" fontIcon="fa-history"></md-icon>
+				<span>Bitácoras CDC</span>
+			</md-toolbar>
+
+			<form>
+				<md-card>
+					<md-card-header>
+						<md-card-title>{{metadata | bitCdcMetadata}}</md-card-title>
+						<md-card-subtitle>{{llave | bitCdcLlave: ['CVE_OPERACION'] }}</md-card-subtitle>
+					</md-card-header>
+					<md-card-content>
+						<!--<div class="container-fluid">-->
+							<!--<div class="row">-->
+								<!--<div class="col-xs-1 col-sm-1 col-md-2 col-lg-2 mnx-left"></div>-->
+								<!--<div class="col-xs-1 col-sm-10 col-md-8 col-lg-8 mnx-center mnx-center-content">-->
+									<!--<md-spinner class=""></md-spinner>-->
+									<md-grid-list cols="4" [style.background]="'lightblue'" rowHeight="3:1">
+										<md-grid-tile>One</md-grid-tile>
+										<md-grid-tile>Two</md-grid-tile>
+										<md-grid-tile>Three</md-grid-tile>
+										<md-grid-tile>Four</md-grid-tile>
+									</md-grid-list>
+								<!--</div>-->
+								<!--<div class="col-xs-1 col-sm-1 col-md-2 col-lg-2 mnx-left"></div>-->
+							<!--</div>-->
+						<!--</div>	-->
+					</md-card-content>
+				</md-card>
+			</form>
+
+		</div>
+
+		<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2 mnx-right"></div>
+
+	</div>
+
+	<div class="row mnx-bottom"></div>
+
+	<!--<div class="row">
+		<div class="col-sm-4">.col-sm-4</div>
+		<div class="col-sm-4">.col-sm-4</div>
+		<div class="col-sm-4">.col-sm-4</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">.col-md-4</div>
+		<div class="col-md-4">.col-md-4</div>
+		<div class="col-md-4">.col-md-4</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-4">.col-lg-4</div>
+		<div class="col-lg-4">.col-lg-4</div>
+		<div class="col-lg-4">.col-lg-4</div>
+	</div>-->
+
+	<!--<div class="row">
+		<div class="col-xl-4">.col-xl-4</div>
+		<div class="col-xl-4">.col-xl-4</div>
+		<div class="<col-xl-4></col-xl-4>">.col-xl-4</div>
+	</div>-->
+</div>

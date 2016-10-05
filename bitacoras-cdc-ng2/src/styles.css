@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/core/theming/prebuilt/pink-bluegrey.css';
+/*@import '~@angular/material/core/theming/prebuilt/pink-bluegrey.css';*/
 
 html,  body {
     height: 100%;
     overflow: hidden;
+    margin: 0px;
 }
 .jumbotron, .container-fluid{
     min-height: 100%;
     overflow: hidden;
 }
-.ui-widget {
-    font-size: 50%;
+.fill-remaining-space {
+    flex: 1 1 auto;
 }
