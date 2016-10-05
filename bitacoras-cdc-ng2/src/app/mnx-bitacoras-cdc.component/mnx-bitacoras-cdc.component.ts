@@ -1,5 +1,5 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CookieService } from 'angular2-cookie/core';
 
 @Component({
@@ -14,7 +14,9 @@ export class MnxBitacorasCDCComponent implements OnInit {
   llave: Array<{ [key: string]: string }>;
 
   constructor(private _cookieSrv: CookieService,
-    private _titleSrv: Title) {
+    private _titleSrv: Title,
+    @Inject('apiUrl') public apiUrl: string) {
+    // console.log('apiUrl', apiUrl);
   }
 
   ngOnInit() {

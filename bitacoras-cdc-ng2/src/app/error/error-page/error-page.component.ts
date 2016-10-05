@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'mnx-bitacoras-cdc-error-page',
+  selector: 'mnx-error-page',
   templateUrl: './error-page.component.html',
   styleUrls: ['./error-page.component.css']
 })

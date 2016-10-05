@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'internal-error',
-  template: `<mnx-bitacoras-cdc-error-page
+  template: `<mnx-error-page
                 error="Error interno"
                 errorCode="500"
-                mensaje="Ocurrió un problema en el servicio, intentelo mas tarde."
-                faIcon="fa-pencil"
-              >
-              </mnx-bitacoras-cdc-error-page>`
+                mensaje="Ocurrió un problema en el servicio, intentelo mas tarde.">
+              </mnx-error-page>`
 })
 export class InternalErrorComponent implements OnInit {
 

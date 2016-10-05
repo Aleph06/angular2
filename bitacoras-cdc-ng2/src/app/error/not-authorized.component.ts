@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 @Component({
-  selector: 'not-authorized',
-  template: `<mnx-bitacoras-cdc-error-page
+  selector: 'mnx-not-authorized',
+  template: `<mnx-error-page
                 error="Sin autorización"
                 errorCode="403"
-                mensaje="No cuenta con la autorización para consultar el recurso solicitado."
-                faIcon="fa-pencil"
-              >
-              </mnx-bitacoras-cdc-error-page>`
+                mensaje="No cuenta con la autorización para consultar el recurso solicitado.">
+              </mnx-error-page>`
 })
 export class NotAuthorizedComponent implements OnInit {
 
-  constructor(private titleService: Title ) { }
+  constructor(private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle( "Sin autorización" );
+    this.titleService.setTitle('Sin autorización');
   }
 
 }

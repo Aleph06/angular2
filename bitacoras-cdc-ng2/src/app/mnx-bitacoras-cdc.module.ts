@@ -25,7 +25,7 @@ import { routing } from './mnx-bitacoras-cdc.routing';
     MaterialModule.forRoot(),
     routing
   ],
-  providers: [Title, ANGULAR2_COOKIE_PROVIDERS, { provide: 'api', useValue: BitCdcConstantes.api }],
+  providers: [Title, ANGULAR2_COOKIE_PROVIDERS, { provide: 'apiUrl', useValue: BitCdcConstantes.api }],
   bootstrap: [MnxBitacorasCDCAppComponent]
 })
 export class MnxBitacorasCDCModule { }
