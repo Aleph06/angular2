@@ -1,0 +1,6 @@
+export * from './conjunto-de-cambios'
+export * from './tabla-origen'
+export * from './tabla-bitacora'
+export * from './filtro'
+export * from './paginador'
+export * from './orden'

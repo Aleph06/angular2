@@ -3,13 +3,32 @@
 
 html,  body {
     height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin: 0px;
 }
 .jumbotron, .container-fluid{
     min-height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .fill-remaining-space {
     flex: 1 1 auto;
+}
+.ui-dropdown{
+    width: 95%!important;
+}
+.ui-dropdown .ui-dropdown-trigger{
+    width: 28px!important;
+}
+.ui-messages {
+    padding: 10px 10px 10px 5px;
+    margin: 0px 0;
+}
+.ui-widget{
+    font-size: 80%;
+}
+.ui-autocomplete-input-token .ui-inputtext {
+      width: 95%!important;
+}
+.ui-calendar > input.hasDatepicker {
+     width: 95%!important;
 }

@@ -1,73 +1,108 @@
-<div class="container-fluid">
-
+<!--<div class="container-fluid">
 	<div class="row mnx-top"></div>
-
 	<div class="row mnx-center">
-
-		<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2 mnx-left"></div>
-
-		<div class="col-xs-10 col-sm-8 col-md-8 col-lg-8 mnx-center">
-
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 mnx-left"></div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mnx-center">
 			<md-toolbar color="primary">
 				<md-icon fontSet="fa" fontIcon="fa-history"></md-icon>
 				<span>Bitácoras CDC</span>
-			</md-toolbar>
-
-			<form>
-				<md-card>
-					<md-card-header>
-						<md-card-title>{{metadata | bitCdcMetadata}}</md-card-title>
-						<md-card-subtitle>{{llave | bitCdcLlave: ['CVE_OPERACION'] }}</md-card-subtitle>
-					</md-card-header>
-					<md-card-content>
-						<!--<div class="container-fluid">-->
-							<!--<div class="row">-->
-								<!--<div class="col-xs-1 col-sm-1 col-md-2 col-lg-2 mnx-left"></div>-->
-								<!--<div class="col-xs-1 col-sm-10 col-md-8 col-lg-8 mnx-center mnx-center-content">-->
-									<!--<md-spinner class=""></md-spinner>-->
-									<md-grid-list cols="4" [style.background]="'lightblue'" rowHeight="3:1">
-										<md-grid-tile>One</md-grid-tile>
-										<md-grid-tile>Two</md-grid-tile>
-										<md-grid-tile>Three</md-grid-tile>
-										<md-grid-tile>Four</md-grid-tile>
-									</md-grid-list>
-								<!--</div>-->
-								<!--<div class="col-xs-1 col-sm-1 col-md-2 col-lg-2 mnx-left"></div>-->
-							<!--</div>-->
-						<!--</div>	-->
-					</md-card-content>
-				</md-card>
-			</form>
-
-		</div>
-
-		<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2 mnx-right"></div>
-
-	</div>
-
-	<div class="row mnx-bottom"></div>
-
-	<!--<div class="row">
-		<div class="col-sm-4">.col-sm-4</div>
-		<div class="col-sm-4">.col-sm-4</div>
-		<div class="col-sm-4">.col-sm-4</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-4">.col-md-4</div>
-		<div class="col-md-4">.col-md-4</div>
-		<div class="col-md-4">.col-md-4</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-4">.col-lg-4</div>
-		<div class="col-lg-4">.col-lg-4</div>
-		<div class="col-lg-4">.col-lg-4</div>
-	</div>-->
-
-	<!--<div class="row">
-		<div class="col-xl-4">.col-xl-4</div>
-		<div class="col-xl-4">.col-xl-4</div>
-		<div class="<col-xl-4></col-xl-4>">.col-xl-4</div>
-	</div>-->
-</div>
+			</md-toolbar>-->
+<md-card>
+	<md-card-header>
+		<!--<md-card-title>{{metadata | bitCdcMetadata}}</md-card-title>
+						<md-card-subtitle>{{llave | bitCdcLlave: ['CVE_OPERACION'] }}</md-card-subtitle>-->
+		<md-card-title style="font-weight: bold">Consulta general</md-card-title>
+		<!--<md-card-subtitle> -- </md-card-subtitle>-->
+	</md-card-header>
+	<md-card-content>
+		<form [formGroup]="formConsultaGeneral">
+			<div class="ui-g ui-g-nopad">
+				<div class="ui-g-6">
+					<label>Conjunto de Cambios</label>
+					<p-dropdown [options]="conjuntosDCSI" formControlName="conjCambios" filter="filter">
+						<template let-cdc>
+							<div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+								<div style="margin-top:4px">{{cdc.label}}</div>
+							</div>
+						</template>
+					</p-dropdown>
+				</div>
+				<div class="ui-g-6">
+					<label>Tabla Origen</label>
+					<p-dropdown [options]="tablasOrigenSI" formControlName="tablaOrigen" filter="filter">
+						<template let-to>
+							<div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+								<div style="margin-top:4px">{{to.label}}</div>
+							</div>
+						</template>
+					</p-dropdown>
+				</div>
+				<div class="ui-g-12">
+					<button class="pull-right" [disabled]="!formConsultaGeneral.valid" md-raised-button color="primary" (click)="loadCarsLazy()">
+                    	<md-icon fontSet="fa" fontIcon="fa-search"></md-icon>
+                    		Consultar Bitácora
+					</button>
+				</div>
+			</div>
+		</form>
+		<form *ngIf="registrosBitacora" [formGroup]="formFiltros">
+			<div class="ui-g ui-g-nopad">
+				<div class="ui-g-12">
+					<p-dataTable [value]="registrosBitacora" [rows]="10" [paginator]="true" [pageLinks]="4" [totalRecords]="totalRegistros" [lazy]="true"
+						(onLazyLoad)="loadCarsLazy($event)" paginatorPosition="both">
+						<header>{{tablaOrigen.esquemaTabOrigen}} - {{tablaOrigen.nomTabOrigen}}</header>
+						<footer>Total: {{totalRegistros}}</footer>
+						<!--<p-column *ngFor="let col of columnas" [field]="col.field" [header]="col.field!=='ID_BITACORA' ? col.header : 'Detalles'"
+							[style]="col.field!=='ID_BITACORA' ? {'text-align':'left'}:{'text-align':'center'}" [filter]="true">
+							<template let-col let-reg="rowData" pTemplate type="body">
+								<span *ngIf="col.field!=='ID_BITACORA'">{{reg[col.field]}}</span>
+								<button md-tooltip="Salir" tooltip-position="below" *ngIf="col.field==='ID_BITACORA'" md-mini-fab>
+									<md-icon fontSet="fa" fontIcon="fa-search"></md-icon>
+								</button>
+							</template>
+						</p-column>-->
+						<p-column field="OPERACION" [style]="{'overflow': 'visible'}" [sortable]="true">
+							<template pTemplate type="header">
+								<span>Operación</span>
+								<p-dropdown [options]="operacionesSI" formControlName="operacion"></p-dropdown>
+							</template>
+						</p-column>
+						<p-column field="F_CAMBIO" [style]="{'overflow': 'visible'}" [sortable]="true">
+							<template pTemplate type="header">
+								<span>Fecha del cambio (Rango)</span>
+								<mnx-bitacoras-cdc-rango-fechas (setRango)="setRangoFechas($event)" [rangoForm]="formFiltros.get('rangoFechas')"></mnx-bitacoras-cdc-rango-fechas>
+							</template>
+						</p-column>
+						<p-column field="DES_CAMBIO" [style]="{'overflow': 'visible'}">
+							<template pTemplate type="header">
+								<span>Descripción del cambio</span>
+								<p-autoComplete inputStyleClass="input-full-width" [suggestions]="items | async" (completeMethod)="search($event)" [multiple]="true"
+									formControlName="columnas"></p-autoComplete>
+								<i *ngIf="buscando" class="fa fa-spiner fa-spin"></i>
+							</template>
+						</p-column>
+						<p-column field="DESCR_USUARIO" [sortable]="true">
+							<template pTemplate type="header">
+								<span>Usuario que efectuó el cambio</span>
+								<input class="input-full-width" type="text" formControlName="descUsuario" pInputText />
+							</template>
+						</p-column>
+						<p-column *ngFor="let col of columnas; let i=index" [field]="col.field" formArrayName="llaves" [sortable]="true">
+							<template pTemplate type="header">
+								<span>{{col.header}}</span>
+								<input class="input-full-width" type="text" [formControlName]="i" pInputText />
+							</template>
+						</p-column>
+						<p-column field="ID_BITACORA" header="Detalles" [style]="{'text-align':'center'}">
+							<template let-reg="rowData" pTemplate type="body">
+								<button md-tooltip="Detalles" tooltip-position="below" color="primary" md-mini-fab (click)="consultarDetalles(reg.ID_BITACORA)">
+									<md-icon fontSet="fa" fontIcon="fa-search"></md-icon>
+								</button>
+							</template>
+						</p-column>
+					</p-dataTable>
+				</div>
+			</div>
+		</form>
+	</md-card-content>
+</md-card>

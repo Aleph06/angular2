@@ -1,6 +1,6 @@
 {
-  "name": "bitacoras-cdc-ng2",
-  "version": "0.0.0",
+  "name": "mnx-bitacoras-cdc-ng2",
+  "version": "0.0.1",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -26,6 +26,8 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.6.3",
     "hammerjs": "^2.0.8",
+    "jquery-ui-bundle": "^1.11.4",
+    "primeng": "^1.0.0-beta.17",
     "rxjs": "5.0.0-beta.12",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.6.23"

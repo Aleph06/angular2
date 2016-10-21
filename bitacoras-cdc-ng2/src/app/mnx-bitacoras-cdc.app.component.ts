@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-mnx-bitacoras-cdc',
-    template: `<router-outlet></router-outlet>`
+    selector: 'mnx-bitacoras-cdc-root',
+    templateUrl: './mnx-bitacoras-cdc.app.component.html',
+    styleUrls: ['./mnx-bitacoras-cdc.app.component.css']
 })
 export class MnxBitacorasCDCAppComponent {
 
