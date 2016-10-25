@@ -38,13 +38,22 @@ export class RangoFechasComponent implements OnInit {
     }
 
     initForm(): void {
-        console.log('RangoFechasComponent:initForm');
-        if (this.rangoForm.contains('finicio')) { this.rangoForm.removeControl('finicio'); }
-        if (this.rangoForm.contains('ffin')) { this.rangoForm.removeControl('ffin'); }
-        this.rangoForm.addControl('finicio', this.initFechaControl());
-        this.rangoForm.addControl('ffin', this.initFechaControl());
-        this.rangoForm.valueChanges.subscribe(value => {
+        console.log('RangoFechasComponent:initForm', this.rangoForm.root.status);
+        this.rangoForm.root.valueChanges.subscribe(value => {
             this.procesaValue(value);
+        });
+        // if (this.rangoForm.contains('finicio')) { this.rangoForm.removeControl('finicio'); }
+        // if (this.rangoForm.contains('ffin')) { this.rangoForm.removeControl('ffin'); }
+        // this.rangoForm.addControl('finicio', this.initFechaControl());
+        // this.rangoForm.addControl('ffin', this.initFechaControl());
+        // this.rangoForm.valueChanges.subscribe(value => {
+        //     this.procesaValue(value);
+        // });
+        this.rangoForm.get('finicio').valueChanges.subscribe(value => {
+            console.log('finicio', value);
+        });
+        this.rangoForm.get('ffin').valueChanges.subscribe(value => {
+            console.log('ffin', value);
         });
     }
 

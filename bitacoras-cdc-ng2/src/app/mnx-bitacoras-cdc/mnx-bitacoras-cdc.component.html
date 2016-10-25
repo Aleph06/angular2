@@ -15,7 +15,7 @@
 		<!--<md-card-subtitle> -- </md-card-subtitle>-->
 	</md-card-header>
 	<md-card-content>
-		<form [formGroup]="formConsultaGeneral">
+		<!--<form [formGroup]="formConsultaGeneral">
 			<div class="ui-g ui-g-nopad">
 				<div class="ui-g-6">
 					<label>Conjunto de Cambios</label>
@@ -44,8 +44,9 @@
 					</button>
 				</div>
 			</div>
-		</form>
-		<form *ngIf="registrosBitacora" [formGroup]="formFiltros">
+		</form>-->
+		<mnx-bitacoras-cdc-selector-bitacora [idTabOrigen]="idTabOrigen" (tablaSeleccionada)="setIdTabOrigen($event)"></mnx-bitacoras-cdc-selector-bitacora>
+		<!--<form *ngIf="registrosBitacora" [formGroup]="formFiltros">
 			<div class="ui-g ui-g-nopad">
 				<div class="ui-g-12">
 					<p-dataTable [value]="registrosBitacora" [rows]="10" [paginator]="true" [pageLinks]="4" [totalRecords]="totalRegistros" [lazy]="true"
@@ -60,7 +61,7 @@
 									<md-icon fontSet="fa" fontIcon="fa-search"></md-icon>
 								</button>
 							</template>
-						</p-column>-->
+						</p-column>
 						<p-column field="OPERACION" [style]="{'overflow': 'visible'}" [sortable]="true">
 							<template pTemplate type="header">
 								<span>Operación</span>
@@ -70,7 +71,10 @@
 						<p-column field="F_CAMBIO" [style]="{'overflow': 'visible'}" [sortable]="true">
 							<template pTemplate type="header">
 								<span>Fecha del cambio (Rango)</span>
-								<mnx-bitacoras-cdc-rango-fechas (setRango)="setRangoFechas($event)" [rangoForm]="formFiltros.get('rangoFechas')"></mnx-bitacoras-cdc-rango-fechas>
+								<div>
+									<p-calendar dateFormat="dd/mm/yy" formControlName="finicio" [minDate]="inicioMinDate" [maxDate]="inicioMaxDate" [readonlyInput]="true" [locale]="locale"></p-calendar>
+									<p-calendar dateFormat="dd/mm/yy" formControlName="ffin" [minDate]="finMinDate" [maxDate]="finMaxDate" [readonlyInput]="true" [locale]="locale"></p-calendar>
+								</div>
 							</template>
 						</p-column>
 						<p-column field="DES_CAMBIO" [style]="{'overflow': 'visible'}">
@@ -103,6 +107,7 @@
 					</p-dataTable>
 				</div>
 			</div>
-		</form>
+		</form>-->
+		<mnx-bitacoras-cdc-consulta-bitacora [idTabOrigen]="idTabOrigen"></mnx-bitacoras-cdc-consulta-bitacora>
 	</md-card-content>
 </md-card>

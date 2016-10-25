@@ -27,6 +27,22 @@ export class TablasOrigenService {
       .catch(this.handleError);
   }
 
+  getById(idTabOrigen: number, conBitacora = false): Promise<TablaOrigen> {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    this.setHeadersGlobal(headers);
+    let url = `${this.fullPath}/${idTabOrigen}?conBitacora=${conBitacora}`;
+    return this.http
+      .get(url, { headers: headers })
+      .toPromise()
+      .then(datos => <TablaOrigen>datos.json())
+      .catch(this.handleError);
+  }
+
+  getByIdConBitacora(idTabOrigen: number): Promise<TablaOrigen> {
+    return this.getById(idTabOrigen, true);
+  }
+
   private handleError(error: any) {
     console.error('Error en llamada a servicio', JSON.stringify(error));
     return Promise.reject(JSON.stringify(error));

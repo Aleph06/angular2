@@ -32,3 +32,9 @@ html,  body {
 .ui-calendar > input.hasDatepicker {
      width: 95%!important;
 }
+md-input {
+    overflow: visible!important;
+}
+.input-full-width {
+    width: 95%;
+}

@@ -13,18 +13,21 @@ import { api, CalendarLocales, SharedRootModule } from './shared';
 
 
 import { InternalErrorComponent, PageNotFoundComponent, NotAuthorizedComponent, ErrorPageComponent } from './error';
-import { MnxBitacorasCDCComponent } from './mnx-bitacoras-cdc.component';
+import {
+  MnxBitacorasCDCComponent, SelectorBitacoraComponent,
+  ConsultaBitacoraComponent, DetallesBitacoraDialogoComponent
+} from './mnx-bitacoras-cdc';
 import {
   ConjuntosDeCambiosService, TablasBitacoraService,
   TablasOrigenService, BitacorasService
-} from './mnx-bitacoras-cdc.component/shared/servicios';
+} from './mnx-bitacoras-cdc/shared/servicios';
 import { MnxBitacorasCDCAppComponent } from './mnx-bitacoras-cdc.app.component';
 import { routing, appRoutingProviders } from './mnx-bitacoras-cdc.routing';
 
 @NgModule({
   declarations: [
-    MnxBitacorasCDCAppComponent,
-    MnxBitacorasCDCComponent,
+    MnxBitacorasCDCAppComponent, SelectorBitacoraComponent, ConsultaBitacoraComponent,
+    MnxBitacorasCDCComponent, DetallesBitacoraDialogoComponent,
     InternalErrorComponent, PageNotFoundComponent, NotAuthorizedComponent, ErrorPageComponent
   ],
   imports: [

@@ -23,7 +23,7 @@ export class TablasBitacoraService {
     return this.http
       .get(this.fullPath, { headers: headers })
       .toPromise()
-      .then(datos =>  (datos.json() !== null ? (datos.json().bitCDCTabBitacora as TablaBitacora[]) : new Array<TablaBitacora>()))
+      .then(datos => (datos.json() !== null ? (datos.json().bitCDCTabBitacora as TablaBitacora[]) : new Array<TablaBitacora>()))
       .catch(this.handleError);
   }
 
@@ -36,6 +36,18 @@ export class TablasBitacoraService {
       .get(url, { headers: headers })
       .toPromise()
       .then(datos => (datos.json() !== null ? (datos.json().bitCDCTabBitacora as TablaBitacora[]) : new Array<TablaBitacora>()))
+      .catch(this.handleError);
+  }
+
+  getByidTabOrigen(idTabOrigen: number): Promise<TablaBitacora> {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    this.setHeadersGlobal(headers);
+    let url = `${this.fullPath}/taborigen/${idTabOrigen}`;
+    return this.http
+      .get(url, { headers: headers })
+      .toPromise()
+      .then(datos => <TablaBitacora>(datos.json().bitCDCTabBitacora))
       .catch(this.handleError);
   }
 
