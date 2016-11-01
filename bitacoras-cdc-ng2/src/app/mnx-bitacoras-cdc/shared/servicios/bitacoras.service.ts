@@ -153,8 +153,8 @@ export class BitacorasService {
         retorno = `${retorno}&finicial=${dia}${mes}${filtro.fechaInicial.getFullYear()}`;
       }
       if (filtro.fechaFinal) {
-        let dia = `${filtro.fechaInicial.getDate() < 10 ? '0' : ''}${String(filtro.fechaInicial.getDate())}`;
-        let mes = `${(filtro.fechaInicial.getMonth() + 1) < 10 ? '0' : ''}${String(filtro.fechaInicial.getMonth() + 1)}`;
+        let dia = `${filtro.fechaFinal.getDate() < 10 ? '0' : ''}${String(filtro.fechaFinal.getDate())}`;
+        let mes = `${(filtro.fechaFinal.getMonth() + 1) < 10 ? '0' : ''}${String(filtro.fechaFinal.getMonth() + 1)}`;
         retorno = `${retorno}&ffinal=${dia}${mes}${filtro.fechaFinal.getFullYear()}`;
       }
       if (filtro.llaves) {

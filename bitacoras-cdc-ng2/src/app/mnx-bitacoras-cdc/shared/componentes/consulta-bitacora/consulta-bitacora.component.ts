@@ -106,6 +106,7 @@ export class ConsultaBitacoraComponent implements OnInit {
       .then(bitacora => {
         this.registrosBitacora = new Array<{ [key: string]: string }>();
         let reg: { [key: string]: string } = {};
+        console.log('registros', JSON.stringify(bitacora['registros']));
         if (typeof bitacora['registros'] !== 'undefined') {
           (bitacora['registros'] as any[]).forEach(r => {
             (r['campo'] as any[]).forEach(rc => {
@@ -164,9 +165,11 @@ export class ConsultaBitacoraComponent implements OnInit {
       if (val['descUsuario'] !== null && (<string>val['descUsuario']).length > 5) {
         filtroN.usuario = val['descUsuario'];
       }
-      if (val['columnas'] !== null && ((typeof val['columnas']) !== 'undefined') && (<string[]>val['columnas']).length > 0) {
+      if (val['columnas'] !== null && ((typeof val['columnas']) !== 'undefined')) {
         filtroN.columnasConCambio = (<string[]>val['columnas']);
       }
+      console.log('filtroN    ', JSON.stringify(filtroN.columnasConCambio));
+      console.log('this.filtro', JSON.stringify(this.filtro.columnasConCambio));
       let fi: Date;
       if (val['finicio'] !== null) {
         fi = this.strToDate(val['finicio']);
@@ -193,8 +196,8 @@ export class ConsultaBitacoraComponent implements OnInit {
           }
         }
       }
-      console.log('filtroN    ', JSON.stringify(filtroN));
-      console.log('this.filtro', JSON.stringify(this.filtro));
+      // console.log('filtroN    ', JSON.stringify(filtroN.columnasConCambio));
+      // console.log('this.filtro', JSON.stringify(this.filtro.columnasConCambio));
       if (!filtroN.equals(this.filtro)) {
         this.filtro = Object.assign({}, filtroN);
         this.consultaBitacora(this.filtro);
@@ -261,6 +264,10 @@ export class ConsultaBitacoraComponent implements OnInit {
     this.inicioMinDate = null;
     this.inicioMaxDate = '+0d';
     this.loadBitacoraLazy();
+  }
+
+  onUnselect() {
+    this.consultaBitacora(this.filtro);
   }
 
   strToDate(value): Date {

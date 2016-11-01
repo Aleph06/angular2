@@ -12,8 +12,8 @@
         </div>
       </div>
       <p-dataTable [value]="registrosBitacora" rows="10" [paginator]="true" [pageLinks]="4" [totalRecords]="totalRegistros" [lazy]="true"
-        (onLazyLoad)="loadBitacoraLazy($event)" paginatorPosition="both"
-        emptyMessage="No se encontraron datos para su consulta" [rowsPerPageOptions]="[10,20,30]">
+        (onLazyLoad)="loadBitacoraLazy($event)" paginatorPosition="both" emptyMessage="No se encontraron datos para su consulta"
+        [rowsPerPageOptions]="[10,20,30]">
         <header>{{tablaOrigen.esquemaTabOrigen}} - {{tablaOrigen.nomTabOrigen}}</header>
         <footer>Total: {{totalRegistros}}</footer>
         <p-column field="OPERACION" [style]="{'overflow': 'visible'}" [sortable]="true">
@@ -37,7 +37,7 @@
           <template pTemplate type="header">
             <span>Descripción del cambio</span>
             <p-autoComplete inputStyleClass="input-full-width" [suggestions]="items | async" (completeMethod)="buscaColumnas($event)"
-              [multiple]="true" formControlName="columnas"></p-autoComplete>
+              [multiple]="true" (onUnselect)=($event) formControlName="columnas"></p-autoComplete>
             <i *ngIf="buscando" class="fa fa-spiner fa-spin"></i>
           </template>
         </p-column>
