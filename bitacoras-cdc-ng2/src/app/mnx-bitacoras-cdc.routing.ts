@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { MnxBitacorasCDCComponent } from './mnx-bitacoras-cdc/mnx-bitacoras-cdc.component';
+import { TestGridComponent } from './test-grid/test-grid.component';
 import { SelectorBitacoraComponent, ConsultaBitacoraComponent } from './mnx-bitacoras-cdc/shared'
 import { PageNotFoundComponent, NotAuthorizedComponent, InternalErrorComponent } from './error';
 import { AuthGuard, AuthService, authHeader } from './shared';
@@ -11,6 +12,7 @@ const appRoutes: Routes = [
     { path: 'consulta/:idTabOrigen', component: ConsultaBitacoraComponent, canActivate: [AuthGuard] },
     { path: 'noautorizado', component: NotAuthorizedComponent },
     { path: 'errorinterno', component: InternalErrorComponent },
+    { path: 'testgrid', component: TestGridComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

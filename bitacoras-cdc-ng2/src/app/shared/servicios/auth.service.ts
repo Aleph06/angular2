@@ -43,6 +43,9 @@ export class AuthService {
         if ((typeof (this.authHeader) !== 'undefined')) {
             headers.append('Authorization', `${this.authHeader}`);
         }
+        headers.append('Cache-Control', 'not-store, no-cache');
+        headers.append('Pragma', 'no-cache');
+        headers.append('Expires', '0');
         return headers;
     }
 }

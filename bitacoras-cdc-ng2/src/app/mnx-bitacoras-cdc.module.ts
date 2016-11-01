@@ -17,6 +17,7 @@ import {
   MnxBitacorasCDCComponent, SelectorBitacoraComponent,
   ConsultaBitacoraComponent, DetallesBitacoraDialogoComponent
 } from './mnx-bitacoras-cdc';
+import { TestGridComponent } from './test-grid/test-grid.component';
 import {
   ConjuntosDeCambiosService, TablasBitacoraService,
   TablasOrigenService, BitacorasService
@@ -27,7 +28,7 @@ import { routing, appRoutingProviders } from './mnx-bitacoras-cdc.routing';
 @NgModule({
   declarations: [
     MnxBitacorasCDCAppComponent, SelectorBitacoraComponent, ConsultaBitacoraComponent,
-    MnxBitacorasCDCComponent, DetallesBitacoraDialogoComponent,
+    MnxBitacorasCDCComponent, DetallesBitacoraDialogoComponent, TestGridComponent,
     InternalErrorComponent, PageNotFoundComponent, NotAuthorizedComponent, ErrorPageComponent
   ],
   imports: [

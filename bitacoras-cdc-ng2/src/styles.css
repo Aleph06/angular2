@@ -38,3 +38,29 @@ md-input {
 .input-full-width {
     width: 95%;
 }
+
+.ui-dialog{
+    overflow: visible;
+}
+.ui-dialog-content{
+    overflow: visible;
+}
+.ui-dialog .ui-dialog-content{
+     overflow: visible;
+}
+a.ui-datepicker-prev{
+    color: #ffffff;
+}
+a.ui-datepicker-next{
+    color: #ffffff;
+}
+.ui-dialog-content [md-raised-button], [md-fab], [md-mini-fab], [md-button], [md-icon-button] {
+    line-height: 25px;
+}
+.ui-dialog .ui-dialog-titlebar{
+    margin: 5px 5px 2px 5px;
+    padding: 0em 0em 0em .5em;
+}
+.ui-dialog .ui-dialog-title{
+    font-size: 16px !important
+}

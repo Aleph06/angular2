@@ -1,0 +1,46 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-md-6 ui-lg-3" style="background-color: aqua">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-3" style="background-color: aqua">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-3" style="background-color: aqua">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-3" style="background-color: aqua">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-md-6 ui-lg-4" style="background-color: coral">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-4" style="background-color: coral">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+  <div class="ui-g-12 ui-lg-4" style="background-color: grey">
+    <md-input placeholder="Nombre" class="input-full-width"></md-input>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+  <div class="ui-g-6 ui-md-2 ui-lg-2 mnx-centered-content">
+    <button [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
+  </div>
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-6 ui-md-2 ui-lg-2">
+    <button class="pull-left" [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
+  </div>
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+  <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
+  <div class="ui-g-6 ui-md-2 ui-lg-2">
+    <button class="pull-right" [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <form [formGroup]="formSelector">
   <div class="ui-g ui-g-nopad">
-    <div class="ui-g-6">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-6 ui-xl-6">
       <label>Conjunto de Cambios</label>
       <p-dropdown [options]="conjuntosDCSI" formControlName="conjCambios" filter="filter">
         <template let-cdc>
@@ -10,7 +10,7 @@
         </template>
       </p-dropdown>
     </div>
-    <div class="ui-g-6">
+    <div class="ui-g-12 ui-sm-12 ui-md-12 ui-lg-6 ui-xl-6">
       <label>Tabla Origen</label>
       <p-dropdown [options]="tablasOrigenSI" formControlName="tablaOrigen" filter="filter">
         <template let-to>
