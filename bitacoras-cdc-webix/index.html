@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="common/content/monex-grid-responsive.css">
+    <link rel="stylesheet" href="common/content/mnx-main.css">
+</head>
+<body>
+<div class="ui-g">
+    <div class="ui-g-12 mnx-top"></div>
+    <div class="ui-g-12 mnx-center">
+        <div class="ui-g-1 ui-sm-1 ui-md-1 ui-lg-1 ui-xl-1 mnx-left"></div>
+        <div id="center-div" class=" ui-g-10 ui-sm-10 ui-md-10 ui-lg-10 ui-xl-10 mnx-center">
+        </div>
+        <div class="ui-g-1 ui-sm-1 ui-md-1 ui-lg-1 ui-xl-1 mnx-right"></div>
+    </div>
+    <div class="ui-g-12 mnx-bottom"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    webix.ui({
+        rows: [
+            {
+                view: "template",
+                type: "header", template: "Bitacoras CDC - Webix",
+                autoheight: true
+            },
+            {
+                view: "toolbar", elements: [
+                {
+                    view: "combo",
+                    label: 'Conjunto de cambios', name: "conjcam",
+                    value: 1, yCount: "3", options: [
+                    {id: 1, value: "CONTABILIDAD"},
+                    {id: 2, value: "SCOC"}
+                ]
+                },
+                {
+                    view: "combo",
+                    label: 'Tabla', name: "tblorigen",
+                    value: 1, yCount: "3", options: [
+                    {id: 1, value: "CO_TIP_CLIENTE"},
+                    {id: 2, value: "CO_ASIENTO_CONTABLE"},
+                    {id: 3, value: "CB_CONF_OPERACION   "}
+                ]
+                }
+            ]
+            },
+            {
+                view: "datatable",
+                autoConfig: true,
+                data: {
+                    title: "My Fair Lady", year: 1964, votes: 533848, rating: 8.9, rank: 5
+                },
+                autoheight: true
+            }
+        ],
+        container: "center-div",
+        id: 'mytab'
+    });
+    window.onresize = function () {
+        $$("mytab").adjust();
+    };
+</script>
+</body>
+</html>

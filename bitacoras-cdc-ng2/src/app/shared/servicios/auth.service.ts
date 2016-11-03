@@ -40,12 +40,14 @@ export class AuthService {
         if (!headers || headers === null) {
             headers = new Headers();
         }
+        // console.log('header', this.authHeader);
         if ((typeof (this.authHeader) !== 'undefined')) {
             headers.append('Authorization', `${this.authHeader}`);
         }
-        headers.append('Cache-Control', 'not-store, no-cache');
-        headers.append('Pragma', 'no-cache');
-        headers.append('Expires', '0');
+        // headers.append('Cache-Control', 'not-store, no-cache');
+        // headers.append('Pragma', 'no-cache');
+        // headers.append('Expires', '0');
+        // console.log('headers', JSON.stringify(headers));
         return headers;
     }
 }
