@@ -1,0 +1,20 @@
+<div class="ui-g">
+    <div class="ui-g-12"></div>
+    <div class="ui-g-12">
+        <div class="ui-g-1 ui-sm-1 ui-md-1 ui-lg-1 ui-xl-1"></div>
+        <div class=" ui-g-10 ui-sm-10 ui-md-10 ui-lg-10 ui-xl-10">
+            <div class=" ui-g-5 ui-sm-5 ui-md-5 ui-lg-5 ui-xl-5"></div>
+            <div class="ui-g-2 ui-sm-2 ui-md-2 ui-lg-2 ui-xl-2" style="text-align: center;">
+                <button [@slideInOut]="slide ? 'in' : 'out'" md-raised-button style="position: relative;top: 0px;">Slide in/out</button>
+            </div>
+            <div class=" ui-g-5 ui-sm-5 ui-md-5 ui-lg-5 ui-xl-5"></div>
+            <md-toolbar color="primary">
+                <span>{{title}}</span>
+            </md-toolbar>
+            <button [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
+            <button md-raised-button (click)="toogleSlide()">Toogle Slide</button>
+        </div>
+        <div class="ui-g-1 ui-sm-1 ui-md-1 ui-lg-1 ui-xl-1"></div>
+    </div>
+    <div class="ui-g-12"></div>
+</div>
