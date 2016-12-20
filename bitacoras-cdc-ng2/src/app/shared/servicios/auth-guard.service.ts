@@ -10,22 +10,22 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
     let url: string = state.url;
-
     return this.checkLogin(url);
   }
 
   checkLogin(url: string): boolean | Promise<boolean> {
-    console.log(this.authService.isLoggedOn);
-    if (this.authService.isLoggedOn) {
+    console.log(this.authService.isCookieValid);
+    if (this.authService.isCookieValid) {
       return true;
     } else {
-      return this.authService.login().toPromise().then(() => {
-        console.log(this.authService.isLoggedOn);
-        if (!this.authService.isLoggedOn) {
-          this.router.navigate(['/noautorizado']);
-        }
-        return this.authService.isLoggedOn;
-      }).catch(err => { console.log('Err', err); return false; });
+      return this.authService.isInContext()
+        .then(inContext => {
+          if (!inContext) {
+            this.router.navigate(['noautorizado']);
+          }
+          return inContext;
+        })
+        .catch(err => { console.log('Err', err); this.router.navigate(['errorinterno']); return false; });
     }
   }
 }

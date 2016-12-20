@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormArray, FormGroup } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
@@ -57,7 +58,8 @@ export class ConsultaBitacoraComponent implements OnInit {
     private _route: ActivatedRoute,
     private _location: Location,
     @Inject('locale') public locale: { [key: string]: any },
-    private _builder: FormBuilder) { }
+    private _builder: FormBuilder,
+    private _titleSrv: Title) { }
 
   ngOnInit() {
     if (this.idTabOrigen === null || (typeof this.idTabOrigen === 'undefined')) {
@@ -85,6 +87,7 @@ export class ConsultaBitacoraComponent implements OnInit {
         .then(tablaBit => {
           console.log('SelectorBitacoraComponent:tablaBit', tablaBit);
           this.tablaOrigen = tablaBit.idTabOrigen;
+          this._titleSrv.setTitle(`Bitácoras CDC - Consulta ${this.tablaOrigen.nomTabOrigen}`);
           console.log('SelectorBitacoraComponent:tablaOrigen', tablaBit.idTabOrigen);
           this.construyeFiltros();
         })

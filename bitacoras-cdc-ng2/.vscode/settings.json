@@ -8,7 +8,9 @@
         "**/node_modules": true,
         "**/dist": true,
         "**/tmp": true,
-        "**/.vscode": true
+        "**/.vscode": true,
+        "**/e2e": true,
+        "**/coverage": true
     },
     "editor.fontSize": 12,
     "editor.formatOnType": true,

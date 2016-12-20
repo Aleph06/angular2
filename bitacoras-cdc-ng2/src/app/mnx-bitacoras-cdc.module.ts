@@ -9,7 +9,7 @@ import {
   ButtonModule, DropdownModule, DataTableModule, SharedModule, AutoCompleteModule, InputTextModule
 } from 'primeng/primeng';
 
-import { api, CalendarLocales, SharedRootModule } from './shared';
+import { api, CalendarLocales, SharedRootModule, ambiente } from './shared';
 
 
 import { InternalErrorComponent, PageNotFoundComponent, NotAuthorizedComponent, ErrorPageComponent } from './error';
@@ -38,7 +38,7 @@ import { routing, appRoutingProviders } from './mnx-bitacoras-cdc.routing';
     ButtonModule, DropdownModule, DataTableModule, SharedModule, AutoCompleteModule, InputTextModule,
     SharedRootModule
   ],
-  providers: [Title, ANGULAR2_COOKIE_PROVIDERS, { provide: 'apiUrl', useValue: api },
+  providers: [Title, ANGULAR2_COOKIE_PROVIDERS, { provide: 'apiUrl', useValue: api },{ provide: 'AMBIENTE', useValue: ambiente },
     { provide: 'locale', useValue: CalendarLocales['ES'] }, appRoutingProviders,
     ConjuntosDeCambiosService, TablasBitacoraService, TablasOrigenService, BitacorasService],
   bootstrap: [MnxBitacorasCDCAppComponent]

@@ -1,18 +1,6 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { LazyLoadEvent, SelectItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
+import { Component, ViewChild } from '@angular/core';
 
-import { CookieService } from 'angular2-cookie/core';
-import { CargandoService, MensajesService, Rango, RangoFechasComponent } from '../shared';
-import { ConjuntosDeCambiosService, BitacorasService, TablasBitacoraService } from './shared/servicios';
-import { TablaOrigen, ConjuntoDeCambios, Filtro, Paginador, Orden } from './shared/modelos';
 import { ConsultaBitacoraComponent } from './shared/componentes';
 
 
@@ -33,6 +21,10 @@ export class MnxBitacorasCDCComponent {
   public idTabOrigen: number;
   @ViewChild(ConsultaBitacoraComponent)
   private consultaBitacoraComponent: ConsultaBitacoraComponent;
+
+  constructor(private _titleSrv: Title) {
+    this._titleSrv.setTitle('Bitácoras CDC - Consulta General');
+  }
 
   setIdTabOrigen(idTabOrigen: number) {
     if (idTabOrigen > 0) {

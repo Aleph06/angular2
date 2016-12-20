@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService, CookieOptions } from 'angular2-cookie/core';
 
 @Injectable()
 export class AuthService {
@@ -13,16 +13,37 @@ export class AuthService {
     isLoggedOn: boolean = false;
     hasValidRol: boolean;
     authHeader: string;
+    savedCookie: string;
+    isCookieValid: boolean = false;
 
     constructor(private _cookieSrv: CookieService,
-        @Inject('authHeader') private _authHeader: string) {
+        @Inject('authHeader') private _authHeader: string,
+        @Inject('AMBIENTE') AMBIENTE: string) {
         this.authHeader = _authHeader;
+        this.savedCookie = this._cookieSrv.get('_s_');
+        console.log('cookie', this.savedCookie);
+        if (AMBIENTE === 'DESA' && (typeof this.savedCookie === 'undefined')) {
+            this._cookieSrv.put('_s_', '40BBCE8CB9E36C9CE054002128FA8F96');
+            this.savedCookie = this._cookieSrv.get('_s_');
+        }
+        console.log('cookie', this.savedCookie);
     }
 
     isHeaderValid(): Observable<boolean> {
         return Observable.of(true).delay(1000).do(val => (this.authHeader !== null
             && this.authHeader !== undefined
             && (typeof this.authHeader !== 'undefined')));
+    }
+
+    isInContext(): Promise<boolean> {
+        return Promise.resolve(this.isCookieValid || this.checkCookie());
+    }
+
+    checkCookie(): Promise<boolean> {
+        this.isCookieValid = (this.savedCookie !== null
+            && this.savedCookie !== undefined
+            && (typeof this.savedCookie !== 'undefined'));
+        return Promise.resolve(this.isCookieValid);
     }
 
     login(): Observable<boolean> {

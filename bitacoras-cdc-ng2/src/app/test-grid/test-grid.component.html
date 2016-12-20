@@ -1,37 +1,13 @@
-<div class="ui-g">
-  <div class="ui-g-12 ui-md-6 ui-lg-3">
-    <md-input required id="txtNombre" placeholder="Nombre" floatingPlaceholder="false" dividerColor="accent" class="input-full-width"></md-input>
-  </div>
-  <div class="ui-g-12 ui-md-6 ui-lg-3">
-    <md-input placeholder="Nombre" class="input-full-width" dividerColor="warn">
-      <span md-prefix>$&nbsp;</span>
-      <span md-suffix>.00</span>
-      <md-hint align="end">Omitir decimales</md-hint>
-    </md-input>
-  </div>
-  <div class="ui-g-12 ui-md-6 ui-lg-3">
-    <md-input placeholder="Nombre" class="input-full-width" dividerColor="primary"></md-input>
-  </div>
-  <div class="ui-g-12 ui-md-6 ui-lg-3">
-    <md-input placeholder="Nombre" class="input-full-width"></md-input>
-  </div>
-</div>
 <div class="ui-g" [formGroup]="formTest">
   <div class="ui-g-12 ui-md-6 ui-lg-4">
-    <md-input placeholder="Nombre" class="input-full-width" formControlName="uno"></md-input>
+    <md-input placeholder="Nombre" dividerColor="primary" class="input-full-width" formControlName="uno"></md-input>
   </div>
   <div class="ui-g-12 ui-md-6 ui-lg-4">
-    <md-input placeholder="Nombre" class="input-full-width" formControlName="dos"></md-input>
+    <md-input placeholder="Nombre" dividerColor="accent" class="input-full-width" formControlName="dos"></md-input>
   </div>
   <div class="ui-g-12 ui-lg-4">
-    <md-input placeholder="Nombre" class="input-full-width" formControlName="tres"></md-input>
+    <md-input placeholder="Nombre" dividerColor="warn" class="input-full-width" formControlName="tres"></md-input>
   </div>
-  <pre>
-    {{formTest.valid | json}} {{formTest.errors | json}}
-  </pre>
-  <pre>
-    {{formTest.get('uno').errors | json}} {{formTest.get('dos').errors | json}} {{formTest.get('tres').errors | json}}
-  </pre>
 </div>
 <div class="ui-g">
   <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
@@ -40,7 +16,7 @@
   </div>
   <div class="ui-g-3 ui-md-5 ui-lg-5"></div>
 </div>
-<div class="ui-g">
+<!--<div class="ui-g">
   <div class="ui-g-6 ui-md-2 ui-lg-2">
     <button class="pull-left" [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
   </div>
@@ -53,4 +29,4 @@
   <div class="ui-g-6 ui-md-2 ui-lg-2">
     <button class="pull-right" [@estado]="estatus ? 'activo' : 'inactivo'" md-raised-button (click)="toogleEstado()">Toogle</button>
   </div>
-</div>
+</div>-->
