@@ -1,0 +1,13 @@
+{
+    "typescript.check.workspaceVersion": false,
+    "files.exclude": {
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/tmp": true,
+        "**/.vscode": true
+    },
+    "editor.fontSize": 11
+}
