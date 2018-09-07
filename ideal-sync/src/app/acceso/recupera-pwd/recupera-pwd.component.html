@@ -1,0 +1,41 @@
+<div fxLayout="column" style="height: 98%;" class="contenedor">
+    <div fxFlex="25" fxLayout="row" fxLayoutAlign="space-between stretch">
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="space-between stretch">
+        <span fxFlex.xs="5" fxFlex.sm="15" fxFlex.md="25" fxFlex.gt-md="30"></span>
+        <div fxFlex.xs="90" fxFlex.sm="70" fxFlex.md="50" fxFlex.gt-md="40">
+            <form (ngSubmit)="onSubmit()">
+                <mat-card class="mat-elevation-z8">
+                    <mat-card-content>
+                        <div class="login-header">
+                            <h1 class="mat-elevation-z4">Recuperar contraseña</h1>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="end stretch">
+                            <mat-form-field color="accent" class="full-width">
+                                <mat-icon inline="true" matPrefix>person_outline</mat-icon>
+                                <input type="text" required autocomplete="username" name="usuario" matInput placeholder="Usuario" [formControl]="usuarioCtrl">
+                                <mat-error *ngIf="usuarioCtrl.invalid">Campo requerido</mat-error>
+                            </mat-form-field>
+                            <br/>
+                            <span style="font-size: x-small">*Si no cuenta con un usuario o no lo recuerda solicitelo al administrador.</span>
+                            <span style="font-size: x-small">*Se enviará una nueva contraseña a la dirección de e-mail registrada.</span>
+                            <span style="font-size: x-small">*Si no tiene una dirección registrada o no recibe su nueva contraseña, contacte al administrador.</span>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button fxFlex="20" [routerLink]="['/']" mat-button>Volver</button>
+                            <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+                                <button type="reset" mat-button>Limpiar</button>
+                                <button type="submit" [disabled]="usuarioCtrl.invalid || usuarioCtrl.pristine" mat-raised-button color="accent">Recuperar</button>
+                            </div>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
+        </div>
+        <span fxFlex.xs="5" fxFlex.sm="15" fxFlex.md="25" fxFlex.gt-md="30"></span>
+    </div>
+    <div fxFlex="25" fxLayout="row" fxLayoutAlign="space-between stretch">
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<form [formGroup]="baseForm">
+	<div class="ui-g ui-g-nopad">
+		<div class="ui-g-12 ">
+			<p-fieldset legend="Consulta" toggleable="false">
+				<div class="ui-g-12">
+					<textarea style="min-height: 300px" pInputTextarea formControlName="sqlquery"></textarea>
+				</div>
+				<div class="ui-g-12 ui-g-nopad">
+					<button class="pull-right" [disabled]="(!baseForm.controls['sqlquery'].valid || baseForm.controls['sqlquery'].pristine)"
+					 md-raised-button color="primary" (click)="validarSQL()">
+                        <md-icon fontSet="fa" fontIcon="fa-gear"></md-icon>
+                        Validar consulta
+                    </button>
+				</div>
+			</p-fieldset>
+		</div>
+	</div>
+</form>

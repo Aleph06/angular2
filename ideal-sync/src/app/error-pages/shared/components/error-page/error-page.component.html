@@ -1,0 +1,21 @@
+<div fxFill fxLayout="row" fxLayoutAlign="space-between stretch">
+    <span fxFlex="10"></span>
+    <div fxLayout="column" fxFlex="80">
+        <span fxFlex="10"></span>
+        <mat-toolbar color="warn">
+            <button mat-button (click)="irAInicio()">
+				<mat-icon class="md-36">arrow_back_ios</mat-icon>
+			</button> &nbsp;&nbsp;&nbsp;
+            <span style="font-size: 300%">{{errorCode || 0}}</span>
+            <span class="fill-remaining-space"></span>
+            <mat-icon class="md-48">warning</mat-icon>
+        </mat-toolbar>
+        <mat-card>
+            <mat-card-title>{{error || 'Error'}}</mat-card-title>
+            <mat-card-content>
+                <p>{{mensaje || 'Mensaje'}}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <span fxFlex="10"></span>
+</div>

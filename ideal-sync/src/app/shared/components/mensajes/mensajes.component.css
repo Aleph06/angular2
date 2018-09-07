@@ -1,0 +1,19 @@
+div.mensaje>span {
+    font-size: 1.15em;
+}
+
+div.mensaje.info i {
+    color: #53DDF5;
+}
+
+div.mensaje.ok i {
+    color: #50F750;
+}
+
+div.mensaje.warn i {
+    color: #E76B12;
+}
+
+div.mensaje.error i {
+    color: #DD0606;
+}

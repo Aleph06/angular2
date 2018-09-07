@@ -1,0 +1,99 @@
+<div fxLayout="column" style="height: 100%;" class="contenedor-alt">
+    <div fxFlex="15" fxLayout="row" fxLayoutAlign="space-between stretch">
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="space-between stretch">
+        <span fxFlex.xs="5" fxFlex.sm="15" fxFlex.md="25" fxFlex.gt-md="30"></span>
+        <div fxFlex.xs="90" fxFlex.sm="70" fxFlex.md="50" fxFlex.gt-md="40" *ngIf="!isIOS">
+            <i-sync-fade-in-out [isVisible]="showForm" [hidden]="!showForm">
+                <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+                    <mat-card class="mat-elevation-z8">
+                        <mat-card-content>
+                            <div class="login-header">
+                                <h1 class="mat-elevation-z4" (click)="showForm=false" style="cursor: pointer;">
+                                    <img style="height: 36px;" src="assets/images/icon.png"> <span>Sync</span>
+                                </h1>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="end stretch">
+                                <mat-form-field color="accent" class="full-width">
+                                    <span matPrefix>
+                                        <mat-icon inline="true">person_outline</mat-icon>&nbsp;</span>
+                                    <input type="text" autocomplete="username" required name="Usuario" matInput placeholder="Usuario" formControlName="Usuario">
+                                    <mat-error *ngIf="loginForm.get('Usuario').hasError('required')">Campo requerido</mat-error>
+                                </mat-form-field>
+                                <br/>
+                                <mat-form-field color="accent" class="full-width">
+                                    <span matPrefix>
+                                        <mat-icon inline="true">vpn_key</mat-icon>&nbsp;</span>
+                                    <input [type]="oculta?'password':'text'" required autocomplete="current-password" name="Contrasenia" matInput placeholder="Contraseña" formControlName="Contrasenia">
+                                    <mat-icon inline="true" matSuffix (click)="oculta = !oculta" style="cursor: pointer;">
+                                        {{oculta? 'visibility' : 'visibility_off'}}
+                                    </mat-icon>
+                                    <mat-error *ngIf="loginForm.get('Contrasenia').hasError('required')">Campo requerido</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <!-- <a fxFlex="40" [routerLink]="['recupera-psw']">
+                                    Recuperar contraseña
+                                </a> -->
+                                <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+                                    <button type="reset" mat-button>Limpiar</button>
+                                    <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="accent">Acceder</button>
+                                </div>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </form>
+            </i-sync-fade-in-out>
+            <i-sync-fade-in-out [isVisible]="!showForm" [hidden]="showForm">
+                <div style="text-align: center;">
+                    <img style="height: 120px;" (click)="showForm=true;" src="assets/images/icon.png" class="avatar">
+                </div>
+            </i-sync-fade-in-out>
+        </div>
+        <div fxFlex.xs="90" fxFlex.sm="70" fxFlex.md="50" fxFlex.gt-md="40" *ngIf="isIOS">
+            <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+                <mat-card class="mat-elevation-z8">
+                    <mat-card-content>
+                        <div class="login-header">
+                            <h1 class="mat-elevation-z4" (click)="showForm=false" style="cursor: pointer;">
+                                <img style="height: 36px;" src="assets/images/icon.png"> <span>Sync</span>
+                            </h1>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="end stretch">
+                            <mat-form-field color="accent" class="full-width">
+                                <mat-icon inline="true" matPrefix>person_outline</mat-icon>
+                                <input type="text" autocomplete="username" required name="Usuario" matInput placeholder="Usuario" formControlName="Usuario">
+                                <mat-error *ngIf="loginForm.get('Usuario').hasError('required')">Campo requerido</mat-error>
+                            </mat-form-field>
+                            <br/>
+                            <mat-form-field color="accent" class="full-width">
+                                <mat-icon inline="true" matPrefix>vpn_key</mat-icon>
+                                <input [type]="oculta?'password':'text'" required autocomplete="current-password" name="Contrasenia" matInput placeholder="Contraseña" formControlName="Contrasenia">
+                                <mat-icon inline="true" matSuffix (click)="oculta = !oculta" style="cursor: pointer;">
+                                    {{oculta? 'visibility' : 'visibility_off'}}
+                                </mat-icon>
+                                <mat-error *ngIf="loginForm.get('Contrasenia').hasError('required')">Campo requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <!-- <a fxFlex="40" [routerLink]="['recupera-psw']">
+                                Recuperar contraseña
+                            </a> -->
+                            <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+                                <button type="reset" mat-button>Limpiar</button>
+                                <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="accent">Acceder</button>
+                            </div>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
+        </div>
+        <span fxFlex.xs="5" fxFlex.sm="15" fxFlex.md="25" fxFlex.gt-md="30"></span>
+    </div>
+    <div fxFlex="25" fxLayout="row" fxLayoutAlign="space-between stretch">
+    </div>
+</div>

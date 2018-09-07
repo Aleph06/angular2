@@ -1,0 +1,17 @@
+<p-panel *ngIf="entronque">
+  <header>
+    <div class="ui-g  ui-g-nopad">
+      <div class="ui-g-2  ui-g-nopad">
+        {{ (entronque.Id > 0)? entronque.Descripcion :'Nuevo' }}
+      </div>
+      <div class="ui-g-9 ui-g-nopad"></div>
+      <div *ngIf="entronque.Id > 0" class="ui-g-1 ui-g-nopad" style="text-align: right; font-size: small; position: relative; top: 7px;">
+        <md-checkbox [(ngModel)]="entronque.Estatus" align="end" (change)="activar($event.checked)">
+          {{entronque.Estatus?'Activo':'Inactivo'}}
+        </md-checkbox>
+      </div>
+    </div>
+  </header>
+  <ideal-sync-entronque-editar *ngIf="entronque.Id > 0" [entronque]="entronque" (updateEntronque)="updateMain($event)"></ideal-sync-entronque-editar>
+  <ideal-sync-entronque-agregar *ngIf="entronque.Id <= 0" [entronque]="entronque"></ideal-sync-entronque-agregar>
+</p-panel>

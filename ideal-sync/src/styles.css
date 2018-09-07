@@ -1,0 +1,219 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+
+
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+
+html,
+body {
+    /* -webkit-font-smoothing: antialiased;*/
+    width: 100%;
+    /* font-family: 'Lato', sans-serif; */
+    font-size: 12px;
+    /* font-style: normal; */
+    height: 100%;
+    overflow: hidden;
+    margin: 0px;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    font-family: 'CenturyGothic', arial, sans-serif;
+    min-height: 100%;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.animated {
+    /* -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;*/
+    /* animation-iteration-count: infinite; */
+    /* -webkit-animation-iteration-count: infinite; */
+    animation-duration: 2000ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes bounce {
+    0%,
+    100% {
+        -webkit-transform: translateY(0);
+    }
+    50% {
+        -webkit-transform: translateY(-25px);
+    }
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-25px);
+    }
+}
+
+.bounce {
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+}
+
+#animated-example {
+    text-align: center;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translate3d(0, 0, 0);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(0.89);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+}
+
+div.centered {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.material-icons.md-18 {
+    font-size: 18px;
+    margin-top: -9px;
+    margin-right: 9px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+    margin-top: -12px;
+    margin-right: 12px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px!important;
+    margin-top: -18px;
+    margin-right: 18px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+    margin-top: -24px;
+    margin-right: 24px;
+}
+
+.material-icons.mat-18 {
+    font-size: 18px;
+}
+
+.material-icons.mat-24 {
+    font-size: 24px;
+}
+
+.material-icons.mat-36 {
+    font-size: 36px;
+}
+
+.material-icons.mat-48 {
+    font-size: 48px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.mat-paginator,
+.mat-paginator-page-size .mat-select-trigger {
+    font-size: 14px;
+}
+
+.load-dialog-container .mat-dialog-container {
+    box-shadow: none;
+    background: transparent;
+}
+
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[hidden] {
+    display: none!important
+}
+
+i-sync-login div.contenedor {
+    /* background: linear-gradient(110deg, #3baffd 60%, #4bc6ff 60%); */
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000', GradientType=0);
+    /* IE6-9 */
+}
+
+i-sync-login div.contenedor-alt {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
+    background: rgb(125, 126, 125);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e', GradientType=0);
+    /* IE6-9 */
+}
+
+nova-promo-recupera-pwd div.contenedor {
+    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+}
+
+mat-card.green {
+    background: linear-gradient(290deg, #a4f88a 10%, #cff6c4 3%);
+}
+
+mat-card.gray {
+    background: linear-gradient(290deg, #afaead 10%, #f6f5f4 3%);
+}
+
+.sync-dark-theme mat-card.gray {
+    background: linear-gradient(290deg, #212121 10%, #000000 3%);
+}
+
+.menu .mat-expansion-panel-body {
+    padding: 0px;
+}

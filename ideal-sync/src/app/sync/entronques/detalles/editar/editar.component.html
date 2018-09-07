@@ -1,0 +1,35 @@
+<div class="ui-g  ui-g-nopad">
+  <div class="ui-g-12  ui-g-nopad">
+    <md-tab-group>
+      <md-tab>
+        <template md-tab-label>
+          <h5 style="font-weight: bold">Conexión</h5>
+        </template>
+        <template md-tab-content>
+          <entronque-datos [entronque]="entronque" (entronqueNuevo)="entronqueActualizado($event)"></entronque-datos>
+        </template>
+      </md-tab>
+      <md-tab>
+        <template md-tab-label>
+          <h5 style="font-weight: bold">Consulta, Destino, Filtros</h5>
+        </template>
+        <template md-tab-content>
+          <div class="ui-g  ui-grid-responsive ui-fluid ui-g-nopad">
+            <div class="ui-g-12">
+              <entronque-base [baseOrigen]="entronque.baseOrigen" (sqlValid)="sqlValid($event)"></entronque-base>
+            </div>
+          </div>
+        </template>
+      </md-tab>
+      <md-tab>
+        <template md-tab-label>
+          <h5 style="font-weight: bold">Permisos</h5>
+        </template>
+        <template md-tab-content>
+          <p>Lista de usuarios con permisos</p>
+          <permisos-entronque [entronque]="entronque"></permisos-entronque>
+        </template>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</div>

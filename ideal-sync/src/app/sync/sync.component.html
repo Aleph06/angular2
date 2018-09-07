@@ -1,0 +1,55 @@
+<div fxLayout="column" fxFill fxLayoutAlign="start stretch">
+    <mat-toolbar fxFlex="8" color="primary" class="mat-elevation-z6">
+        <mat-toolbar-row>
+            <span>{{nombreApp}}</span>
+            <span class="fill-remaining-space"></span>
+            <button fxShow="false" fxShow.gt-xs mat-button [matMenuTriggerFor]="menu">
+                <mat-icon class="md-36">account_circle</mat-icon>
+                {{ usuario }}
+            </button>
+        </mat-toolbar-row>
+        <mat-toolbar-row fxHide="false" fxHide.gt-xs>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon class="md-36">account_circle</mat-icon>
+                {{ usuario }}
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="toggleTheme()" title="Tema">
+                <mat-icon>format_color_fill</mat-icon>
+                &nbsp;Tema&nbsp;&nbsp;
+            </button>
+        <button (click)="cerrarSesion()" mat-menu-item>
+                <mat-icon>exit_to_app</mat-icon>
+                &nbsp;Salir&nbsp;&nbsp;
+            </button>
+    </mat-menu>
+    <br/>
+    <div fxFlex [style.touch-action]="'pan-y'" style="overflow-y: auto; overflow-x: hidden" fxLayout="row" fxLayoutAlign="start stretch">
+        <mat-card fxFlex="19" style="padding: 2px; margin-bottom: 10px; height: 98%; overflow-y: auto" class="gray menu">
+            <mat-accordion multi="true">
+
+                <mat-expansion-panel *ngFor="let item of navItems">
+                    <mat-expansion-panel-header>
+                        {{item.nombre}}
+                    </mat-expansion-panel-header>
+
+                    <mat-nav-list>
+
+                        <a mat-list-item [routerLink]="[subitem.ruta]" routerLinkActive="router-link-active" *ngFor="let subitem of item.items" [style.font-size]="subitem.nombre.length > 20 ?'0.8em': '1em'">
+                            <mat-icon class="md-36">{{subitem.icon}}</mat-icon>
+                            {{ subitem.nombre }}
+                        </a>
+                    </mat-nav-list>
+
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </mat-card>
+        <div fxFlexOffset="1" fxFlex fxLayout="column" fxFill fxLayoutAlign="start stretch">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

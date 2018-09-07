@@ -1,0 +1,56 @@
+<div class="ui-g">
+  <div class="ui-g-10">
+    <selector-entronque [entronque]="entronqueSeleccionado" [showEntronques]="false" (onChange)="setEntronque($event)"></selector-entronque>
+  </div>
+  <div *ngIf="entronqueSeleccionado" [class]="'ui-g-3 panel panel-heading' + (hasBaseDropZoneOver?' panel-danger':' panel-default')"
+    style="height: 150px;">
+    <div class="panel-heading">
+      <label [class]="'btn btn-default btn-file'+(uploader.queue.length > 0 ? ' disabled': '')">
+      Seleccionar archivo ... 
+      <input type="file" [disabled]="uploader.queue.length > 0" style="display: none;" ng2FileSelect [uploader]="uploader" accept=".xlsx, .xls, .csv"/>
+      </label>
+    </div>
+    <div class="panel-body" ng2FileDrop (fileOver)="fileOverBase($event)" [uploader]="uploader">
+      <span>O arrastre un archivo aqui...</span>
+    </div>
+  </div>
+  <div class="ui-g-9">
+    <table *ngIf="uploader.queue.length > 0" class="table">
+      <thead>
+        <tr>
+          <th width="50%">Nombre</th>
+          <th>Tamaño</th>
+          <th>Progreso</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td><strong>{{item.file.name}}</strong></td>
+
+          <td *ngIf="uploader.options.isHTML5" nowrap>
+            {{ ( (item.file.size > 1000) ? ( (1000000 > item.file.size) ? (item.file.size/1000 | number:'1.2-2') : (item.file.size/1000000
+            | number:'1.2-2') ) : (item.file.size) ) }} {{ ( (item.file.size > 1000) ? ( (1000000 > item.file.size) ? 'KB'
+            : 'MB' ) : 'BYTES' ) }}
+          </td>
+          <td *ngIf="uploader.options.isHTML5">
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <span *ngIf="item.isSuccess"><i class="fa  fa-check-circle-o"></i></span>
+            <span *ngIf="item.isCancel"><i class="fa  fa-ban"></i></span>
+            <span *ngIf="item.isError"><i class="fa  fa-trash-o"></i></span>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><span class="fa fa-upload"></span> Subir</button>
+            <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading"><span class="fa fa-ban"></span>Cancelar</button>
+            <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()"><span class="fa fa-trash"></span> Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
