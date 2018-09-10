@@ -5,10 +5,10 @@ import {
 } from '../../shared/index';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SelectItem } from 'primeng/primeng';
-import { CargandoService, MensajesService, DialogoConfirmacionService } from '../../../../shared/index';
+import { CargandoService, MensajesService, ConfirmacionService } from 'app/shared';
 
 @Component({
-    selector: 'entronque-datos',
+    selector: 'i-sync-entronque-datos',
     templateUrl: 'datos.component.html'
 })
 export class DatosComponent implements OnInit {
@@ -22,7 +22,7 @@ export class DatosComponent implements OnInit {
     autopistas: Autopista[];
     esConexionCorrecta = false;
     tiposEnlace: SelectItem[];
-    verContrasenia: boolean = false;
+    verContrasenia = false;
 
     constructor(private _builder: FormBuilder,
         private _autopistasService: AutopistasService,
@@ -32,7 +32,7 @@ export class DatosComponent implements OnInit {
         private _basesService: BasesService,
         private _metadatosSrv: MetadatosService,
         private _mensajesSrv: MensajesService,
-        private _dialogoConfirmacionService: DialogoConfirmacionService) { }
+        private _dialogoConfirmacionService: ConfirmacionService) { }
 
     ngOnInit() {
         this.buildItemsTipo();
@@ -83,25 +83,21 @@ export class DatosComponent implements OnInit {
     private buildItemsAutopistas(): void {
         this.autopistaSI = new Array<SelectItem>();
         this.autopistaSI.push({ label: 'Seleccione', value: null });
-        this._cargandoService.toggleLoadingIndicator(true);
         this._autopistasService.getAutopistas()
             .then(autopistas => {
                 this.autopistas = autopistas;
                 autopistas.forEach(a => {
                     this.autopistaSI.push({ value: a.Id, label: a.Nombre });
                 });
-                this._cargandoService.toggleLoadingIndicator(false);
             })
             .catch(error => {
                 console.log(error); this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
     private buildItemsTablasDestino(): void {
         this.tablasSI = new Array<SelectItem>();
         this.tablasSI.push({ label: 'Seleccione', value: null });
-        this._cargandoService.toggleLoadingIndicator(true);
         this._metadatosSrv.getTablasDestino()
             .then(tablas => {
                 tablas.forEach(tabla => {
@@ -110,7 +106,6 @@ export class DatosComponent implements OnInit {
             })
             .catch(error => {
                 console.log(error); this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
@@ -161,7 +156,7 @@ export class DatosComponent implements OnInit {
         if (this.entronque.baseOrigen !== null && (typeof this.entronque.baseOrigen !== 'undefined')) {
             this.enlaceForm.get('base').setValue(this.entronque.baseOrigen.BaseDeDatos);
         }
-        if (this.entronque.conexion.URL !== null && (typeof this.entronque.conexion.URL !== 'undefinded')
+        if (this.entronque.conexion.URL !== null && (this.entronque.conexion.URL)
             && (this.entronque.conexion.URL.length > 0)) {
             this.enlaceForm.addControl('puerto',
                 this._builder.control(this.entronque.conexion.URL, [Validators.required, Validators.pattern(`^[0-9]{4}$`)]));
@@ -169,18 +164,18 @@ export class DatosComponent implements OnInit {
     }
 
     confirmarAgregar(): void {
-        this._dialogoConfirmacionService.confirmarBasic('Confirmación',
-            `Se creará el entronque: ${this.datosForm.get('nombre').value}.
-            ¿Desea continuar?`)
-            .then(respuesta => {
+        this._dialogoConfirmacionService.confirmar({
+            encabezado: 'Confirmación', mensaje: `Se creará el entronque: ${this.datosForm.get('nombre').value}. ¿Desea continuar?`,
+            tipo: 'info'
+        })
+            .subscribe(respuesta => {
                 if (respuesta) {
                     if (this.datosForm.valid) {
-                        let entronque = new Entronque(-1, String(this.datosForm.get('nombre').value),
+                        const entronque = new Entronque(-1, String(this.datosForm.get('nombre').value),
                             false, +this.datosForm.get('idAutopista').value, this.datosForm.get('idEntronque').value);
-                        this._cargandoService.toggleLoadingIndicator(true);
                         this.guardarEntronque(entronque)
                             .then(entronqueNuevo => {
-                                let baseDestino = new Base(-1, 'IdealRepositorioData', this.datosForm.get('tablaDestino').value, null);
+                                const baseDestino = new Base(-1, 'IdealRepositorioData', this.datosForm.get('tablaDestino').value, null);
                                 baseDestino.IdEntronque = entronqueNuevo.Id;
                                 this.guardarBase(baseDestino)
                                     .then(base => {
@@ -190,7 +185,6 @@ export class DatosComponent implements OnInit {
                                         this.guardarEntronque(entronqueNuevo)
                                             .then(entronqueFinal => {
                                                 this.entronque = Object.assign({}, entronqueFinal);
-                                                this._cargandoService.toggleLoadingIndicator(false);
                                                 if (this.enlaceForm.valid && this.enlaceForm.dirty) {
                                                     this.comprobarEnlace(entronqueFinal);
                                                 } else {
@@ -200,12 +194,10 @@ export class DatosComponent implements OnInit {
                                     })
                                     .catch(error => {
                                         this._mensajesSrv.agregaError(error);
-                                        this._cargandoService.toggleLoadingIndicator(false);
                                     });
                             })
                             .catch(error => {
                                 this._mensajesSrv.agregaError(error);
-                                this._cargandoService.toggleLoadingIndicator(false);
                             });
                     }
                 }
@@ -214,18 +206,19 @@ export class DatosComponent implements OnInit {
 
     confirmarActualizar(): void {
         console.log('actual', this.entronque.baseDestino);
-        this._dialogoConfirmacionService.confirmarBasic('Confirmación',
-            `Se actualizarán los datos del entronwque: ${this.datosForm.get('nombre').value}.
-            ¿Desea continuar?`)
-            .then(respuesta => {
+        this._dialogoConfirmacionService.confirmar({
+            encabezado: 'Confirmación',
+            mensaje: `Se actualizarán los datos del entronque: ${this.datosForm.get('nombre').value}.
+            ¿Desea continuar?`, tipo: 'info'
+        })
+            .subscribe(respuesta => {
                 if (respuesta) {
                     if (this.datosForm.valid) {
                         console.log('actual', this.entronque.baseDestino);
                         this.entronque.IdGrupo = +this.datosForm.get('idAutopista').value;
                         this.entronque.Descripcion = String(this.datosForm.get('nombre').value);
                         this.entronque.IdEntronque = String(this.datosForm.get('idEntronque').value);
-                        let entActualizar = Object.assign({}, this.entronque);
-                        this._cargandoService.toggleLoadingIndicator(true);
+                        const entActualizar = Object.assign({}, this.entronque);
                         this.guardarEntronque(entActualizar)
                             .then(entronqueActual => {
                                 if (this.datosForm.get('tablaDestino').dirty) {
@@ -241,7 +234,6 @@ export class DatosComponent implements OnInit {
                                             entronqueActual.IdbaseDestino = base.Id;
                                             entronqueActual.baseDestino = base;
                                             this.entronque = entronqueActual;
-                                            this._cargandoService.toggleLoadingIndicator(false);
                                             if (this.enlaceForm.valid && this.enlaceForm.dirty) {
                                                 this.comprobarEnlace(entronqueActual);
                                             } else {
@@ -250,10 +242,8 @@ export class DatosComponent implements OnInit {
                                         })
                                         .catch(error => {
                                             this._mensajesSrv.agregaError(error);
-                                            this._cargandoService.toggleLoadingIndicator(false);
                                         });
                                 } else {
-                                    this._cargandoService.toggleLoadingIndicator(false);
                                     if (this.enlaceForm.valid && this.enlaceForm.dirty) {
                                         this.comprobarEnlace(entronqueActual);
                                     } else {
@@ -262,7 +252,6 @@ export class DatosComponent implements OnInit {
                                 }
                             }).catch(error => {
                                 this._mensajesSrv.agregaError(error);
-                                this._cargandoService.toggleLoadingIndicator(false);
                             });
                     }
                 }
@@ -270,20 +259,15 @@ export class DatosComponent implements OnInit {
     }
 
     private guardarEntronque(entronque: Entronque): Promise<Entronque> {
-        return this._entronquesService.save(entronque)
-            .then(e => { return Promise.resolve(e); })
-            .catch(error => { console.log(error); Promise.reject(error) });
+        return this._entronquesService.save(entronque);
     }
 
     private guardarBase(base: Base): Promise<Base> {
-        return this._basesService.save(base)
-            .then(b => Promise.resolve(b))
-            .catch(error => { console.log(error); Promise.reject(error); });
+        return this._basesService.save(base);
     }
 
     private comprobarEnlace(entronque: Entronque): void {
         console.log('Comprobar enlace: init');
-        this._cargandoService.toggleLoadingIndicator(true);
         if (this.enlaceForm.valid) {
             if (this.enlaceForm.get('base').dirty) {
                 if (entronque.IdbaseOrigen <= 0) {
@@ -302,7 +286,6 @@ export class DatosComponent implements OnInit {
                                     this.entronque = Object.assign({}, entronqueFinal);
                                     this.pruebaEnlace()
                                         .then(id => {
-                                            this._cargandoService.toggleLoadingIndicator(false);
                                             if (id > 0) {
                                                 this.onEnlaceOK(id);
                                             } else {
@@ -311,7 +294,6 @@ export class DatosComponent implements OnInit {
                                         })
                                         .catch(error => {
                                             this.onEnlaceError();
-                                            this._cargandoService.toggleLoadingIndicator(false);
                                         });
                                 });
 
@@ -319,13 +301,10 @@ export class DatosComponent implements OnInit {
                     })
                     .catch(error => {
                         this._mensajesSrv.agregaError(error);
-                        this._cargandoService.toggleLoadingIndicator(false);
                     });
             } else {
-                console.log('base', JSON.stringify(this.entronque.baseOrigen));
                 this.pruebaEnlace()
                     .then(id => {
-                        this._cargandoService.toggleLoadingIndicator(false);
                         if (id > 0) {
                             this.onEnlaceOK(id);
                         } else {
@@ -334,14 +313,12 @@ export class DatosComponent implements OnInit {
                     })
                     .catch(error => {
                         this.onEnlaceError();
-                        this._cargandoService.toggleLoadingIndicator(false);
                     });
             }
         }
     }
 
     private pruebaEnlace(): Promise<number> {
-        this._cargandoService.toggleLoadingIndicator(true);
         let enlace: Conexion;
         if (this.entronque.conexion !== null && (typeof this.entronque.conexion !== 'undefined')) {
             enlace = this.entronque.conexion;
@@ -355,20 +332,17 @@ export class DatosComponent implements OnInit {
         enlace.IdEntronque = this.entronque.Id;
         return this._enlacesService.testEnlace(enlace)
             .then(conn => {
-                this._cargandoService.toggleLoadingIndicator(false);
                 return conn.Id;
             })
-            .catch(error => { console.log(error); this._cargandoService.toggleLoadingIndicator(false); return Promise.reject(error); });
+            .catch(error => { console.log(error); return Promise.reject(error); });
     }
 
     onEnlaceOK(idEnlace: number): void {
         console.log('entronque', JSON.stringify(this.entronque));
         console.log('idEnlace', JSON.stringify(idEnlace));
-        this._cargandoService.toggleLoadingIndicator(true);
         this.entronque.IdEnlace = idEnlace;
         this.guardarEntronque(this.entronque)
             .then(entronqueGuardado => {
-                this._cargandoService.toggleLoadingIndicator(false);
                 console.log('nuevo', JSON.stringify(entronqueGuardado));
                 this.entronque = entronqueGuardado;
                 this.entronqueNuevo.emit({ evento: 'entronque', entronque: this.entronque });
@@ -376,7 +350,6 @@ export class DatosComponent implements OnInit {
             }).catch(error => {
                 console.error('Error al agregar', error);
                 this.entronqueNuevo.emit({ evento: 'error', error: error });
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
@@ -384,4 +357,5 @@ export class DatosComponent implements OnInit {
         console.log('sinEnlace', JSON.stringify(this.entronque));
         this.entronqueNuevo.emit({ evento: 'sinEnlace', entronque: this.entronque });
     }
+
 }

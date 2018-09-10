@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutopistasService, EntronquesService } from '../servicios/index';
 import { Entronque } from '../modelos/index';
-import { CargandoService, MensajesService, Auth2Service } from '../../../../shared/index';
+import { CargandoService, MensajesService, AuthService } from 'app/shared';
 import { SelectItem } from 'primeng/primeng';
 
 @Component({
-    selector: 'selector-entronque',
+    selector: 'i-sync-selector-entronque',
     templateUrl: 'selector-entronque.component.html'
 })
 export class SelectorEntronqueComponent implements OnInit {
@@ -16,15 +16,15 @@ export class SelectorEntronqueComponent implements OnInit {
     entronquesItems: SelectItem[];
     private nullItem: SelectItem = { label: 'Seleccione...', value: null };
     @Input('entronque') private entronque: Entronque;
-    @Output() onChange = new EventEmitter<Entronque>();
-    @Input('showEntronques') showEntronques: boolean = true;
+    @Output() change = new EventEmitter<Entronque>();
+    @Input('showEntronques') showEntronques = true;
 
     constructor(private _autopistasSrv: AutopistasService,
         private _entronquesSrv: EntronquesService,
         private _builder: FormBuilder,
         private _cargandoService: CargandoService,
         private _mensajesSrv: MensajesService,
-        private _authService: Auth2Service) { }
+        private _authService: AuthService) { }
 
     ngOnInit(): void {
         console.log('entroque:init', this.entronque);
@@ -49,70 +49,59 @@ export class SelectorEntronqueComponent implements OnInit {
     }
 
     private creaItemsAutopista(): void {
-        this._cargandoService.toggleLoadingIndicator(true);
         this._autopistasSrv.getAutopistas()
             .then(autopistas => {
                 autopistas.forEach(autopista => {
                     this.autopistasItems.push({ value: autopista.Id, label: autopista.Nombre });
                 });
-                this._cargandoService.toggleLoadingIndicator(false);
             })
             .catch(error => {
                 this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
     seleccionaAutopista() {
         if (this.selectorForm.get('idAutopistaStr').valid) {
-            let idAutopista = +this.selectorForm.get('idAutopistaStr').value;
+            const idAutopista = +this.selectorForm.get('idAutopistaStr').value;
             this.cargaEntronquesDeAutopista(idAutopista);
-            this.onChange.emit(null);
+            this.change.emit(null);
         }
     }
 
     cargaEntronquesDeAutopista(idAutopista: number) {
-        this._cargandoService.toggleLoadingIndicator(true);
         this.entronquesItems = new Array<SelectItem>();
         this.entronquesItems.push(this.nullItem);
         this._entronquesSrv.getEntronqueByidAutopista(idAutopista)
             .then(entronques => {
                 entronques.forEach(entronque => {
-                    if (this._authService.hasPrivEntronque(entronque.Id)) {
+                    // if (this._authService.hasPrivEntronque(entronque.Id)) {
                         this.entronquesItems.push({ value: entronque.Id, label: entronque.Descripcion });
-                    }
+                    // }
                 });
                 if (!this.showEntronques) {
                     if (this.entronquesItems.length > 1) {
                         this.selectorForm.get('idEntronqueStr').setValue(String(this.entronquesItems[1].value));
                         this.seleccionaEntronque();
                     } else {
-                        this._mensajesSrv.agregaWarn('Error', 'Autopista no tiene entronques registrados');
-                        this._cargandoService.toggleLoadingIndicator(false);
+                        this._mensajesSrv.agregaWarn('Autopista no tiene entronques registrados');
                     }
-                } else {
-                    this._cargandoService.toggleLoadingIndicator(false);
                 }
             })
             .catch(error => {
                 this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
     seleccionaEntronque() {
         if (this.selectorForm.valid) {
-            this._cargandoService.toggleLoadingIndicator(true);
-            let idAutopista = +this.selectorForm.get('idAutopistaStr').value;
-            let idEntronque = +this.selectorForm.get('idEntronqueStr').value;
+            const idAutopista = +this.selectorForm.get('idAutopistaStr').value;
+            const idEntronque = +this.selectorForm.get('idEntronqueStr').value;
             this._entronquesSrv.getEntronqueByidAutopistaId(idAutopista, idEntronque)
                 .then(entronque => {
-                    this.onChange.emit(entronque);
-                    this._cargandoService.toggleLoadingIndicator(false);
+                    this.change.emit(entronque);
                 })
                 .catch(error => {
                     this._mensajesSrv.agregaError(error);
-                    this._cargandoService.toggleLoadingIndicator(false);
                 });
         }
     }

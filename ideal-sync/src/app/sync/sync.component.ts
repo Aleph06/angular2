@@ -64,7 +64,7 @@ export class SyncComponent implements OnInit, OnDestroy {
           { nombre: 'Reporte Tickets Acumulado', descripcion: 'Reporte Tickets Procesados', icon: 'insert_chart', ruta: '/reportes/2' },
           { nombre: 'Reporte Log Proceso Nocturno', descripcion: 'Reporte Tickets Procesados', icon: 'insert_chart', ruta: '/reportes/3' },
           { nombre: 'Reportes de Tickets por Folio', descripcion: 'Reporte Tickets Procesados', icon: 'insert_chart', ruta: '/reportes/4' },
-          { nombre: 'Reporte de Tickets por Periodo', descripcion: 'Reporte Tickets Procesados', 
+          { nombre: 'Reporte de Tickets por Periodo', descripcion: 'Reporte Tickets Procesados',
           icon: 'insert_chart', ruta: '/reportes/5' },
           { nombre: 'Reporte de cargas por entronque', descripcion: 'Reporte Tickets Procesados',
            icon: 'insert_chart', ruta: '/reportes/6' }

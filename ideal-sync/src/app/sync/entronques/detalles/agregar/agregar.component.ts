@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { CargandoService, DialogoConfirmacionService, MensajesService, SesionInfoService } from '../../../../shared';
+import { CargandoService, ConfirmacionService, MensajesService, SessionService } from '../../../../shared';
 import { PermisosUsuarioService } from '../../../shared';
 import { Entronque } from '../../shared';
 
 
 @Component({
-  selector: 'ideal-sync-entronque-agregar',
+  selector: 'i-sync-entronque-agregar',
   templateUrl: './agregar.component.html'
 })
 export class AgregarComponent implements OnInit {
@@ -14,10 +14,10 @@ export class AgregarComponent implements OnInit {
   @Input() entronque: Entronque;
 
   constructor(private _permisosUsuarioService: PermisosUsuarioService,
-    private _sesionInfoService: SesionInfoService,
+    private _sesionInfoService: SessionService,
     private _cargandoService: CargandoService,
     private _router: Router,
-    private _dialogoConfirmacionService: DialogoConfirmacionService,
+    private _dialogoConfirmacionService: ConfirmacionService,
     private _mensajesSrv: MensajesService) { }
 
   ngOnInit() {
@@ -26,12 +26,15 @@ export class AgregarComponent implements OnInit {
   entronqueAgregado(cambio: any) {
     if (cambio['evento'] === 'entronque') {
       this.entronque = (cambio['entronque'] as Entronque);
-      this._permisosUsuarioService.add(this._sesionInfoService.idUsuario, this.entronque.Id)
+      // TODO corregir id
+      this._permisosUsuarioService.add(this._sesionInfoService.principal.nivel, this.entronque.Id)
         .then(resp => {
           if (resp.ok) {
-            this._dialogoConfirmacionService.confirmarBasic('Éxito', `El entronque se a agragado correctamente. 
-                            ¿Desea ir a la pantalla de configuracion?`)
-              .then(respuesta => {
+            this._dialogoConfirmacionService.confirmar({
+              encabezado: 'Éxito', mensaje: `El entronque se a agragado correctamente.
+                            ¿Desea ir a la pantalla de configuracion?`, tipo: 'info'
+            })
+              .subscribe(respuesta => {
                 if (respuesta) {
                   this._router.navigate(['/entronques/detalle', {
                     idAutopista: this.entronque.IdGrupo,
@@ -45,13 +48,19 @@ export class AgregarComponent implements OnInit {
         });
     } else if (cambio['evento'] === 'sinEnlace') {
       this.entronque = (cambio['entronque'] as Entronque);
-      this._sesionInfoService.agregaPermiso(this.entronque.Id);
-      this._permisosUsuarioService.add(this._sesionInfoService.idUsuario, this.entronque.Id)
+      // TODO permiso
+      // this._sesionInfoService.agregaPermiso(this.entronque.Id);
+      // TODO corregir id
+      this._permisosUsuarioService.add(this._sesionInfoService.principal.nivel, this.entronque.Id)
         .then(resp => {
           if (resp.ok) {
-            this._dialogoConfirmacionService.confirmarBasic('Éxito',
-              `El entronque se a agragado correctamente, sin embargo no se creo el enlace. ¿Desea ir a la pantalla de configuracion?`)
-              .then(respuesta => {
+            this._dialogoConfirmacionService.confirmar({
+              encabezado: 'Éxito',
+              mensaje: `El entronque se a agragado correctamente, sin embargo no se creo el enlace.
+              ¿Desea ir a la pantalla de configuracion?`,
+              tipo: 'warn'
+            })
+              .subscribe(respuesta => {
                 if (respuesta) {
                   this._router.navigate(['/entronques/detalle', {
                     idAutopista: this.entronque.IdGrupo,

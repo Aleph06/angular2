@@ -2,11 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutopistasService, EntronquesService, ProcesosService, Autopista, Entronque } from '../shared/index';
-import { CargandoService, MensajesService, DialogoConfirmacionService, Auth2Service, PrimeFacesLocales } from '../../../shared';
+import { CargandoService, MensajesService, ConfirmacionService, AuthService } from 'app/shared';
 import { SelectItem } from 'primeng/primeng';
 
 @Component({
-    selector: 'entronque-administracion-operacion',
+    selector: 'i-sync-entronque-administracion-operacion',
     templateUrl: 'administracion-operacion.component.html'
 })
 export class EntronqueAdminOperaComponent implements OnInit {
@@ -22,7 +22,7 @@ export class EntronqueAdminOperaComponent implements OnInit {
     entronqueSeleccionado: Entronque;
     entronqueSel: SelectItem;
 
-    confEliminar: boolean = false;
+    confEliminar = false;
 
     procesoForm: FormGroup;
     confirmarEjecucion = false;
@@ -37,8 +37,8 @@ export class EntronqueAdminOperaComponent implements OnInit {
         private router: Router,
         private _cargandoService: CargandoService,
         private _mensajesSrv: MensajesService,
-        private _dialogoConfirmacionService: DialogoConfirmacionService,
-        private _auth2Service: Auth2Service) { }
+        private _dialogoConfirmacionService: ConfirmacionService,
+        private _auth2Service: AuthService) { }
 
 
     ngOnInit() {
@@ -46,15 +46,15 @@ export class EntronqueAdminOperaComponent implements OnInit {
         this.autopistasSel.push({ label: 'Seleccione', value: String(0) });
         this.actualizaAutopistas();
         this.fHoy = new Date();
-        let fHoyStr = `${this.fHoy.getDate() < 10 ? '0' : ''}${this.fHoy.getDate()}/${this.fHoy.getMonth() + 1}/${this.fHoy.getFullYear()}`;
+        const fHoyStr =
+            `${this.fHoy.getDate() < 10 ? '0' : ''}${this.fHoy.getDate()}/${this.fHoy.getMonth() + 1}/${this.fHoy.getFullYear()}`;
         this.procesoForm = this._builder.group({
             fecha: [this.fHoy, Validators.required]
         });
-        this.es = PrimeFacesLocales.ES;
+        // this.es = PrimeFacesLocales.ES;
     }
 
     private actualizaAutopistas() {
-        this._cargandoService.toggleLoadingIndicator(true);
         this.autopistasService.getAutopistas()
             .then(autopistas => {
                 this.autopistas = autopistas;
@@ -62,11 +62,9 @@ export class EntronqueAdminOperaComponent implements OnInit {
                     this.autopistasSel.push({ label: autopista.Nombre, value: autopista.Id });
                 });
                 this.autopistaSel = String(0);
-                this._cargandoService.toggleLoadingIndicator(false);
             })
             .catch(error => {
                 this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
@@ -86,45 +84,41 @@ export class EntronqueAdminOperaComponent implements OnInit {
     }
 
     eliminar() {
-        this._dialogoConfirmacionService.confirmarBasic('Confirmar', 'Se elimará el registro del entronque y todos los datos de conexion')
-            .then(respuesta => {
+        this._dialogoConfirmacionService.confirmar({
+            encabezado: 'Confirmar',
+            mensaje: 'Se elimará el registro del entronque y todos los datos de conexion', tipo: 'warn'
+        })
+            .subscribe(respuesta => {
                 if (respuesta) {
-                    this._cargandoService.toggleLoadingIndicator(true);
                     this.entronquesService.delete(this.entronqueSeleccionado)
                         .then(r => {
-                            if (r.status = 200) {
-                                this._mensajesSrv.agregaMensaje('info', 'Confirmación', 'Entronque eliminado correctamente');
+                            if (r.status === 200) {
+                                this._mensajesSrv.agregaInfo('Entronque eliminado correctamente');
                             } else {
-                                this._mensajesSrv.agregaMensaje('error', 'Error',
-                                    'No fue posible eliminar la autopista, intente mas tarde.');
+                                this._mensajesSrv.agregaError('No fue posible eliminar la autopista, intente mas tarde.');
                             }
-                            this._cargandoService.toggleLoadingIndicator(false);
                             this.actualizaEntronques();
                         })
                         .catch(error => {
                             this._mensajesSrv.agregaError(error);
-                            this._cargandoService.toggleLoadingIndicator(false);
                         });
                 }
             });
     }
 
     toogleActivo(): void {
-        let enc = (!this.entronqueSeleccionado.Estatus ? 'Activar' : 'Desactivar') + ' entronque';
-        let mens = `Se ${(!this.entronqueSeleccionado.Estatus ? 'activará' : 'desactivará')} el entronque, ¿Desea continuar? `;
-        this._dialogoConfirmacionService.confirmarBasic(enc, mens)
-            .then(confirmado => {
+        const enc = (!this.entronqueSeleccionado.Estatus ? 'Activar' : 'Desactivar') + ' entronque';
+        const mens = `Se ${(!this.entronqueSeleccionado.Estatus ? 'activará' : 'desactivará')} el entronque, ¿Desea continuar? `;
+        this._dialogoConfirmacionService.confirmar({ encabezado: enc, mensaje: mens, tipo: 'warn' })
+            .subscribe(confirmado => {
                 if (confirmado) {
                     console.log('Accion', 'Ejecuta rutina ' + enc);
-                    this._cargandoService.toggleLoadingIndicator(true);
                     this.entronquesService.toogleActivo(this.entronqueSeleccionado.Id, !this.entronqueSeleccionado.Estatus)
                         .then(entActualizado => {
                             this.entronqueSeleccionado = entActualizado;
-                            this._cargandoService.toggleLoadingIndicator(false);
                         })
                         .catch(error => {
                             this._mensajesSrv.agregaError('No fue posible activar el entronque. Consulta o enlace invalidos');
-                            // this._mensajesSrv.agregaError(error);
                         });
                 }
             });
@@ -139,16 +133,13 @@ export class EntronqueAdminOperaComponent implements OnInit {
     }
 
     actualizaEntronques() {
-        this._cargandoService.toggleLoadingIndicator(true);
         this.entronquesService
             .getEntronqueByidAutopista(+this.autopistaSel)
             .then(entronques => {
-                this.entronques = entronques.filter(e => this._auth2Service.hasPrivEntronque(e.Id));
-                this._cargandoService.toggleLoadingIndicator(false);
+                this.entronques = entronques; // .filter(e => this._auth2Service.hasPrivEntronque(e.Id));
             })
             .catch(error => {
                 this._mensajesSrv.agregaError(error);
-                this._cargandoService.toggleLoadingIndicator(false);
             });
     }
 
@@ -164,20 +155,15 @@ export class EntronqueAdminOperaComponent implements OnInit {
     }
 
     confirmaEjecucion() {
-        console.log('Ejecuta', this.entronqueSeleccionado.IdGrupo + ' ' + this.entronqueSeleccionado.Id);
-        console.log('Ejecuta:fecha', this.procesoForm.get('fecha').value);
-        let fProceso = <Date>this.procesoForm.get('fecha').value;
+        const fProceso = <Date>this.procesoForm.get('fecha').value;
         console.log('Ejecuta:fecha', fProceso);
         this.confirmarEjecucion = false;
-        this._cargandoService.toggleLoadingIndicator(true);
         this._procesosService.ejecutaProceso(this.entronqueSeleccionado.Id, fProceso)
             .then(mensaje => {
-                this._cargandoService.toggleLoadingIndicator(false);
-                this._mensajesSrv.agregaMensaje('info', 'Confirmación', mensaje);
+                this._mensajesSrv.agregaInfo(mensaje);
                 this.procesoForm.reset();
             })
             .catch(error => {
-                this._cargandoService.toggleLoadingIndicator(false);
                 this._mensajesSrv.agregaError(error);
             });
     }
@@ -185,5 +171,4 @@ export class EntronqueAdminOperaComponent implements OnInit {
     cancelaEjecucion() {
         this.confirmarEjecucion = false;
     }
-
 }

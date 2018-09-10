@@ -1,3 +1,3 @@
-export * from './datos.component'
-export * from './permisos-entronque.component'
-export * from './base.component'
+export * from './datos.component';
+export * from './permisos-entronque.component';
+export * from './base.component';

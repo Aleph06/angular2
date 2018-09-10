@@ -8,6 +8,8 @@ import {
   Reporte0Component, Reporte1Component, Reporte2Component,
   Reporte3Component, Reporte4Component, Reporte5Component
 } from './reportes';
+import { PermisosUsuariosComponent } from './usuarios';
+import { EntronqueAdminOperaComponent, EntronqueResolve, EntronqueDetalleComponent, CargasComponent } from './entronques';
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
     component: SyncComponent,
     children: [
       { path: '', component: VacioComponent },
+      { path: 'usuarios', component: PermisosUsuariosComponent },
+      { path: 'entronques', component: EntronqueAdminOperaComponent },
+      { path: 'entronques/detalle', component: EntronqueDetalleComponent, resolve: { entronque: EntronqueResolve } },
+      { path: 'entronques/cargas', component: CargasComponent, resolve: { entronque: EntronqueResolve } },
       { path: 'reportes/1', component: Reporte0Component },
       { path: 'reportes/2', component: Reporte1Component },
       { path: 'reportes/3', component: Reporte2Component },

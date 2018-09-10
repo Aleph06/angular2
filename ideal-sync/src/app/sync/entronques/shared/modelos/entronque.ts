@@ -1,5 +1,7 @@
-import { Conexion, Base, Autopista } from './index';
-import { Usuario } from '../../../usuarios/index';
+import { Conexion } from './conexion';
+import { Autopista } from './autopista';
+import { Base } from './base';
+import { Usuario } from '../../../shared/models/domain/usuario';
 
 export class Entronque {
     constructor(

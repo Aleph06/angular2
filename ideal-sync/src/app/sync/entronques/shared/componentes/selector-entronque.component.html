@@ -3,21 +3,21 @@
         <div class="ui-g-6">
             <label>Autopista/Grupo</label>
             <p-dropdown [filter]="true" [options]="autopistasItems" formControlName="idAutopistaStr" [style]="{'width':'95%'}" (onChange)="seleccionaAutopista()">
-                <template let-aut>
+                <ng-template let-aut>
                     <div style="height: 25px;">
                         {{aut.label}}
                     </div>
-                </template>
+                </ng-template>
             </p-dropdown>
         </div>
         <div *ngIf="selectorForm.get('idAutopistaStr').valid && showEntronques" class="ui-g-6">
             <label>Entronque</label>
             <p-dropdown [filter]="true" [options]="entronquesItems" formControlName="idEntronqueStr" [style]="{'width':'95%'}" (onChange)="seleccionaEntronque()">
-                <template let-ent>
+                <ng-template let-ent>
                     <div style="height: 25px;">
                         {{ent.label}}
                     </div>
-                </template>
+                </ng-template>
             </p-dropdown>
         </div>
     </div>

@@ -5,9 +5,9 @@ import { CargandoService } from '../../shared';
 import { UtilsService } from './shared';
 
 @Component({
-  selector: 'i-sync-reportes',
-  template: `<iframe *ngIf="rutaReporte" style="width: 100%; border: 0; height: 700px;" (load)="finishLoadIframe()" 
-  scrolling="no" 
+  selector: 'i-sync-reportes-2',
+  template: `<iframe *ngIf="rutaReporte" style="width: 100%; border: 0; height: 700px;" (load)="finishLoadIframe()"
+  scrolling="no"
   [src]="rutaReporte">
 </iframe>`
 })

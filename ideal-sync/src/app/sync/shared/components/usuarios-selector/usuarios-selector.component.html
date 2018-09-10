@@ -1,0 +1,15 @@
+<mat-form-field floatPlaceholder="never" class="full-width">
+    <input type="text" [placeholder]="'Buscar Usuario ('+minInput+' caracteres al menos)'" matInput [formControl]="autocompleteCtrl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option.usuario }}
+        </mat-option>
+    </mat-autocomplete>
+    <span [style.visibility]="showSearchSpinner" matPrefix>        
+    <i class="fa fa-refresh fa-spin"
+    style="font-size:14px;color:black;margin-right:5px"></i>
+  </span>
+    <mat-icon [style.opacity]="(disabled || autocompleteCtrl.invalid)?'0.4':'1'" matSuffix (click)="cancel()">cancel</mat-icon>
+    <mat-error *ngIf="autocompleteCtrl.getError('minlength') && autocompleteCtrl.dirty">Escriba al menos {{minInput}} caractéres</mat-error>
+</mat-form-field>
+<mat-error *ngIf="isEmpty">No se encontraton resultados</mat-error>

@@ -1,23 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-import { Auth2Service } from '../../../../shared';
-import { ConstantesGlobales } from '../../../shared/utils/constantes';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class CargasService {
 
-    private hostUrl: string = ConstantesGlobales.urlHost;
-    private cargasUrl = `${this.hostUrl}api/Upload`;
+    private cargasUrl = `${this.hostUrl}/Upload`;
 
-    constructor(private http: Http, private _authSrv: Auth2Service) { }
+    constructor(private http: HttpClient, @Inject('AUTH_API_ENDPOINT') private hostUrl: string) { }
 
-    doCarga(Id: number, nombreArchivo: string): Promise<Response> {
-        let headers: Headers = new Headers();
-        this.setHeadersGlobal(headers);
-        let url = `${this.cargasUrl}/${Id}?nombreArchivo=${nombreArchivo}`;
+    doCarga(Id: number, nombreArchivo: string): Promise<any> {
+        const url = `${this.cargasUrl}/${Id}?nombreArchivo=${nombreArchivo}`;
         return this.http
-            .put(url, JSON.stringify({}), { headers: headers })
+            .put(url, JSON.stringify({}))
             .toPromise()
             .then(response => response)
             .catch(this.handleError);
@@ -26,9 +20,5 @@ export class CargasService {
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.json() || error);
-    }
-
-    private setHeadersGlobal(headers: Headers) {
-        this._authSrv.authHeaders(headers);
     }
 }

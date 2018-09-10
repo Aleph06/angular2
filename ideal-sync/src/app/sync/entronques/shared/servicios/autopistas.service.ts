@@ -1,40 +1,28 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Autopista } from '../modelos/autopista';
-import { Auth2Service } from '../../../../shared/index';
-import { ConstantesGlobales } from '../../../shared/utils/constantes';
 
 @Injectable()
 export class AutopistasService {
 
-    private hostUrl: string = ConstantesGlobales.urlHost;
-    private autopistasUrl = `${this.hostUrl}api/GruposEntronques`;
+    private autopistasUrl = `${this.hostUrl}/GruposEntronques`;
 
-    constructor(private http: Http, private _authSrv: Auth2Service) { }
+    constructor(private http: HttpClient, @Inject('AUTH_API_ENDPOINT') private hostUrl: string) { }
     getAutopistas(): Promise<Autopista[]> {
-        let headers: Headers = new Headers();
-        this.setHeadersGlobal(headers);
-        return this.http.get(this.autopistasUrl, {
-            headers: headers
-        })
+        return this.http.get(this.autopistasUrl)
             .toPromise()
             .then(response => {
-                return response.json() as Autopista[];
+                return response as Autopista[];
             })
             .catch(this.handleError);
     }
 
     getAutopistaByid(id: number): Promise<Autopista> {
-        let headers: Headers = new Headers();
-        this.setHeadersGlobal(headers);
-        let url = `${this.autopistasUrl}/${id}`;
-        return this.http.get(url, {
-            headers: headers
-        })
+        const url = `${this.autopistasUrl}/${id}`;
+        return this.http.get(url)
             .toPromise()
             .then(response => {
-                return response.json() as Autopista;
+                return response as Autopista;
             })
             .catch(this.handleError);
     }
@@ -52,45 +40,34 @@ export class AutopistasService {
         return this.post(autopista);
     }
     delete(autopista: Autopista) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.setHeadersGlobal(headers);
-        let url = `${this.autopistasUrl}/${autopista.Id}`;
+        const url = `${this.autopistasUrl}/${autopista.Id}`;
         return this.http
-            .delete(url, { headers: headers })
+            .delete(url)
             .toPromise()
             .catch(this.handleError);
     }
 
     private post(autopista: Autopista): Promise<Autopista> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        this.setHeadersGlobal(headers);
         return this.http
-            .post(this.autopistasUrl, JSON.stringify(autopista), { headers: headers })
+            .post(this.autopistasUrl, JSON.stringify(autopista))
             .toPromise()
-            .then(res => res.json())
+            .then(res => res as Autopista)
             .catch(this.handleError);
     }
 
 
     private put(autopista: Autopista) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.setHeadersGlobal(headers);
-        let url = `${this.autopistasUrl}/${autopista.Id}`;
+        const url = `${this.autopistasUrl}/${autopista.Id}`;
         return this.http
-            .put(url, JSON.stringify(autopista), { headers: headers })
+            .put(url, JSON.stringify(autopista))
             .toPromise()
             .then(() => autopista)
             .catch(this.handleError);
     }
+
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.json() || error);
-    }
-
-    private setHeadersGlobal(headers: Headers) {
-        this._authSrv.authHeaders(headers);
     }
 
 }

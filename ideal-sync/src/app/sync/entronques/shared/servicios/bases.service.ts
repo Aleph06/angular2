@@ -1,31 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-import { Base } from '../modelos/index';
-import { Auth2Service } from '../../../../shared/index';
-import { ConstantesGlobales } from '../../../shared/utils/constantes';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Base } from '../modelos/base';
 
 @Injectable()
 export class BasesService {
 
-    private hostUrl: string = ConstantesGlobales.urlHost;
-    private basesUrl = `${this.hostUrl}api/Bases`;
-    private filtrosUrl = `${this.hostUrl}api/Filtros`;
-    private mapeosUrl = `${this.hostUrl}api/Mapeos`;
-    private columnasUrl = `${this.hostUrl}api/Columnas`;
+    private basesUrl = `${this.hostUrl}/Bases`;
+    private filtrosUrl = `${this.hostUrl}/Filtros`;
+    private mapeosUrl = `${this.hostUrl}/Mapeos`;
+    private columnasUrl = `${this.hostUrl}/Columnas`;
 
-    constructor(private http: Http, private _authSrv: Auth2Service) { }
+    constructor(private http: HttpClient, @Inject('AUTH_API_ENDPOINT') private hostUrl: string) { }
 
     getBaseByid(id: number): Promise<Base> {
-        let headers: Headers = new Headers();
-        this.setHeadersGlobal(headers);
-        let url = `${this.basesUrl}/${id}`;
-        return this.http.get(url, {
-            headers: headers
-        })
+        const url = `${this.basesUrl}/${id}`;
+        return this.http.get(url)
             .toPromise()
             .then(response => {
-                return response.json() as Base;
+                return response as Base;
             })
             .catch(this.handleError);
     }
@@ -37,47 +29,37 @@ export class BasesService {
         return this.post(base);
     }
 
-    delete(base: Base): Promise<Response> {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.setHeadersGlobal(headers);
-        let url = `${this.basesUrl}/${base.Id}`;
+    delete(base: Base): Promise<any> {
+        const url = `${this.basesUrl}/${base.Id}`;
         return this.http
-            .delete(url, { headers: headers })
+            .delete(url)
             .toPromise()
-            .then(res => res.json())
+            .then(res => res)
             .catch(this.handleError);
     }
 
     private post(base: Base): Promise<Base> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        this.setHeadersGlobal(headers);
         return this.http
-            .post(this.basesUrl, JSON.stringify(base), { headers: headers })
+            .post(this.basesUrl, base)
             .toPromise()
-            .then(res => res.json())
+            .then(res => res as Base)
             .catch(this.handleError);
     }
 
 
     private put(base: Base): Promise<Base> {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.setHeadersGlobal(headers);
         return this.http
-            .put(this.basesUrl, JSON.stringify(base), { headers: headers })
+            .put(this.basesUrl, base)
             .toPromise()
-            .then(res => res.json())
+            .then(res => res as Base)
             .catch(this.handleError);
     }
 
 
-    deleteFiltro(idFiltro: number): Promise<Response> {
-        let headers = new Headers();
-        this.setHeadersGlobal(headers);
-        let url = `${this.filtrosUrl}/${idFiltro}`;
+    deleteFiltro(idFiltro: number): Promise<any> {
+        const url = `${this.filtrosUrl}/${idFiltro}`;
         return this.http
-            .delete(url, { headers: headers })
+            .delete(url)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -85,11 +67,7 @@ export class BasesService {
 
     private handleError(error: any) {
         console.error('An error occurred', error);
-        return Promise.reject(error.json() || error);
-    }
-
-    private setHeadersGlobal(headers: Headers) {
-        this._authSrv.authHeaders(headers);
+        return Promise.reject(error || error);
     }
 
 }

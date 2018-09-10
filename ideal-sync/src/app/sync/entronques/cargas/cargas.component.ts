@@ -1,43 +1,42 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
-import { SesionInfoService, CargandoService, MensajesService, DialogoConfirmacionService } from '../../../shared/index';
+import { SessionService, CargandoService, MensajesService, ConfirmacionService } from 'app/shared';
 import { EntronquesService, Entronque, SelectorEntronqueComponent } from '../shared';
 import { CargasService } from './shared';
-import { ConstantesGlobales } from '../../shared/utils/constantes';
 
 @Component({
-  selector: 'app-cargas',
+  selector: 'i-sync-cargas',
   templateUrl: 'cargas.component.html'
 })
 export class CargasComponent implements OnInit {
 
   uploader: FileUploader;
-  hasBaseDropZoneOver: boolean = false;
+  hasBaseDropZoneOver = false;
   private sub: any;
   entronqueSeleccionado: Entronque;
   @ViewChild(SelectorEntronqueComponent)
   private selector: SelectorEntronqueComponent;
 
 
-  constructor(private _sesionInfoSrv: SesionInfoService,
+  constructor(
+    @Inject('AUTH_API_ENDPOINT') private hostUrl: string,
+    private _sesionInfoSrv: SessionService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cargandoService: CargandoService,
     private entronquesService: EntronquesService,
     private _cargasService: CargasService,
     private _mensajesSrv: MensajesService,
-    private _dialogoConfirmacionService: DialogoConfirmacionService,
+    private _dialogoConfirmacionService: ConfirmacionService,
     private _title: Title) {
   }
 
   ngOnInit() {
-    this._title.setTitle('Ideal Sync - Cargas manuales')
-    this._cargandoService.toggleLoadingIndicator(true);
-    let header = `Bearer ${this._sesionInfoSrv.token}`;
+    const header = `Bearer ${this._sesionInfoSrv.token}`;
     this.uploader = new FileUploader({
-      url: `${ConstantesGlobales.urlHost}api/Upload`,
+      url: `${this.hostUrl}/Upload`,
       authToken: header,
       allowedMimeType: [
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -46,13 +45,11 @@ export class CargasComponent implements OnInit {
       removeAfterUpload: true
     });
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      this._cargandoService.toggleLoadingIndicator(true);
       this._cargasService.doCarga(this.entronqueSeleccionado.Id, String(response))
         .then(resp => {
           if (resp.ok) {
             console.log(resp.json());
             this._mensajesSrv.agregaMensaje('info', 'Éxito', resp.json());
-            this._cargandoService.toggleLoadingIndicator(false);
           } else {
             throw Error(resp.json());
           }
@@ -60,12 +57,10 @@ export class CargasComponent implements OnInit {
         .catch(error => {
           console.error('Error al cargar datos', error);
           this._mensajesSrv.agregaError(error);
-          this._cargandoService.toggleLoadingIndicator(false);
         });
     };
     this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {
-      this._cargandoService.toggleLoadingIndicator(false);
-      this._mensajesSrv.agregaMensaje('error', 'Error', JSON.stringify(response));
+      this._mensajesSrv.agregaError(JSON.stringify(response));
     };
     // this.sub = this._route
     //   .params

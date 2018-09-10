@@ -1,33 +1,27 @@
 <div class="ui-g-12">
-  <div class="ui-g-12 ui-md-12 ui-lg-8" *ngIf="entronque">
-    <p-toolbar>
-      <div class="ui-toolbar-group-right">
-        <button title="Remover Permiso" [disabled]="!usuarioSeleccionado" pButton type="button" icon="fa-times"
-                (click)="eliminarPermiso()"></button>
-        <button title="Actualizar datos" pButton type="button" icon="fa-refresh"
-                (click)="actualizaEntronques()"></button>
-      </div>
-    </p-toolbar>
-    <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
-      <div class="ui-g">
-        <div class="ui-g-12 ui-md-12 ui-lg-10">
-          <buscador-usuarios (onSelect)="setUsuario($event)"></buscador-usuarios>
+    <div class="ui-g-12 ui-md-12 ui-lg-8" *ngIf="entronque">
+        <p-toolbar>
+            <div class="ui-toolbar-group-right">
+                <button title="Remover Permiso" [disabled]="!usuarioSeleccionado" pButton type="button" icon="fa fa-times" (click)="eliminarPermiso()"></button>
+                <button title="Actualizar datos" pButton type="button" icon="fa-refresh" (click)="actualizaEntronques()"></button>
+            </div>
+        </p-toolbar>
+        <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-10">
+                    <i-sync-usuarios-selector (onSelect)="setUsuario($event)"></i-sync-usuarios-selector>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-2">
+                    <button [disabled]="!usuario" title="Agregar" style="width: 80%; top: 28px; position:relative;" pButton (click)="agregarPermiso()" type="button" icon="fa-plus"></button>
+                </div>
+            </div>
         </div>
-        <div class="ui-g-12 ui-md-12 ui-lg-2">
-          <button [disabled]="!usuario" title="Agregar" style="width: 80%; top: 28px; position:relative;" pButton
-                  (click)="agregarPermiso()"
-                  type="button" icon="fa-plus"></button>
-        </div>
-      </div>
+        <p-dataTable emptyMessage="Sin permisos" [value]="entronque.usuarios" selectionMode="single" [(selection)]="usuarioSeleccionado" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[10,15,20]">
+            <header>Usuarios con permiso</header>
+            <footer *ngIf="entronque.usuarios">Total: {{entronque.usuarios.length}}</footer>
+            <p-column field="Id" header="Identificador"></p-column>
+            <p-column field="usuario" header="Nombre"></p-column>
+        </p-dataTable>
     </div>
-    <p-dataTable emptyMessage="Sin permisos" [value]="entronque.usuarios" selectionMode="single"
-                 [(selection)]="usuarioSeleccionado"
-                 [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[10,15,20]">
-      <header>Usuarios con permiso</header>
-      <footer *ngIf="entronque.usuarios">Total: {{entronque.usuarios.length}}</footer>
-      <p-column field="Id" header="Identificador"></p-column>
-      <p-column field="usuario" header="Nombre"></p-column>
-    </p-dataTable>
-  </div>
-  <div class="ui-g-12 ui-md-12 ui-lg-3" *ngIf="entronque"></div>
+    <div class="ui-g-12 ui-md-12 ui-lg-3" *ngIf="entronque"></div>
 </div>

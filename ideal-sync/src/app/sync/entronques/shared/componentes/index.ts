@@ -1,1 +1,1 @@
-export * from './selector-entronque.component'
+export * from './selector-entronque.component';

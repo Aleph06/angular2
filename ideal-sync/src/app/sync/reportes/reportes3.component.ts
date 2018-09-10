@@ -5,9 +5,9 @@ import { CargandoService } from '../../shared';
 import { UtilsService } from './shared';
 
 @Component({
-  selector: 'i-sync-reportes',
-  template: `<iframe *ngIf="rutaReporte" style="width: 100%; border: 0; height: 700px;" (load)="finishLoadIframe()" 
-  scrolling="no" 
+  selector: 'i-sync-reportes-3',
+  template: `<iframe *ngIf="rutaReporte" style="width: 100%; border: 0; height: 700px;" (load)="finishLoadIframe()"
+  scrolling="no"
   [src]="rutaReporte">
 </iframe>`
 })
@@ -26,7 +26,7 @@ export class Reporte3Component implements OnInit {
         this.rutaReporte = sanitizer
           .bypassSecurityTrustResourceUrl(
             this.hostssrs + '/ReportServer/Pages/ReportViewer.aspx?%2fReportesIDEALSYNC%2fIdealSyncRep04&rs:Command=Render'
-            );
+          );
       });
   }
 
