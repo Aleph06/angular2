@@ -49,7 +49,7 @@
                         "styles": [
                             { "input": "node_modules/font-awesome/scss/font-awesome.scss" },
                             "node_modules/primeicons/primeicons.css",
-                            "node_modules/primeng/resources/themes/nova-light/theme.css",
+                            "./src/assets/styles/jaguar-landrover/theme.css",
                             "node_modules/primeng/resources/primeng.min.css",
                             "./src/assets/fonts/material-icons/material-icons.css",
                             { "input": "src/assets/styles/sync-material-theme.scss" },

@@ -2,100 +2,89 @@
     <div class="ui-g-12 ui-md-6 ui-lg-6">
         <form [formGroup]="datosForm">
             <div *ngIf="entronque.Id <= 0" class="ui-g-12">
-                <label>Tipo enlace</label>
-                <p-dropdown [options]="tiposEnlace" formControlName="tipoEnlace" [style]="{'width':'95%'}" (onChange)="setTipo($event.value)">
-                    <ng-template let-tpenl>
-                        <div style="height: 25px;">
-                            {{tpenl.label}}
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                <mat-form-field class="full-width">
+                    <mat-select placeholder="Tipo enlace" required formControlName="tipoEnlace">
+                        <mat-option *ngFor="let te of tiposEnlace" [value]="te.value">
+                            {{te.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <label>Autopista *</label>
-                <p-dropdown [filter]="true" [options]="autopistaSI" formControlName="idAutopista" [style]="{'width':'95%'}">
-                    <ng-template let-aut>
-                        <div style="height: 25px;">
+                <mat-form-field class="full-width">
+                    <mat-select placeholder="Autopista" required formControlName="idAutopista">
+                        <mat-option *ngFor="let aut of autopistaSI" [value]="aut.value">
                             {{aut.label}}
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <mat-form-field class="form-control full-width" appearance="standard">
-                    <mat-label>Nombre entronque</mat-label>
-                    <input required matInput placeholder="Nombre entronque" formControlName="nombre" type="text">
+                <mat-form-field class="full-width">
+                    <input placeholder="Nombre entronque" required matInput type="text" formControlName="nombre">
                     <mat-error *ngIf="datosForm.get('nombre').hasError('required')">Campo requerido</mat-error>
                 </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <mat-form-field class="form-control full-width" appearance="standard">
-                    <mat-label>Id entronque</mat-label>
-                    <input required matInput placeholder="Id entronque" formControlName="idEntronque" type="text">
+                <mat-form-field class="full-width">
+                    <input placeholder="Id entronque" required matInput type="text" formControlName="idEntronque">
                     <mat-error *ngIf="datosForm.get('idEntronque').hasError('required')">Campo requerido</mat-error>
                     <mat-error *ngIf="datosForm.get('idEntronque').hasError('pattern')">El identificador debe estar compuesto de solo dígitos</mat-error>
                 </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <label>Tabla destino</label>
-                <p-dropdown [options]="tablasSI" [filter]="true" formControlName="tablaDestino" [style]="{'width':'95%'}">
-                    <ng-template let-tbl>
-                        <div style="height: 25px;">
-                            {{tbl.label}}
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+                <mat-form-field class="full-width">
+                    <mat-select placeholder="Tabla destino" required formControlName="tablaDestino">
+                        <mat-option *ngFor="let tb of tablasSI" [value]="tb.value">
+                            {{tb.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </form>
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-6">
         <form [formGroup]="enlaceForm">
             <div class="ui-g-12">
-                <!-- <mat-input placeholder="Dirección ip *" type="text" class="input-full-width" formControlName="ip" [dividerColor]="!enlaceForm.controls['ip'].valid && !enlaceForm.controls['ip'].pristine ? 'warn' : 'primary'">
-                    <mat-hint class="md-warn" [hidden]="enlaceForm.controls['ip'].valid || enlaceForm.controls['ip'].pristine" align="end">
-                        <span [hidden]="!enlaceForm.controls['ip'].hasError('required')">Campo requerido</span>
-                        <span [hidden]="!enlaceForm.controls['ip'].hasError('pattern')">Patrón de valor incorrecto [0-255].[].[].[0-255]</span>
-                    </mat-hint>
-                </mat-input> -->
+                <mat-form-field class="full-width">
+                    <input placeholder="Dirección ip" required matInput type="text" formControlName="ip">
+                    <mat-error *ngIf="!enlaceForm.get('ip').hasError('required')">Campo requerido</mat-error>
+                    <mat-error *ngIf="!enlaceForm.get('ip').hasError('pattern')">Patrón de valor incorrecto [0-255].[].[].[0-255]</mat-error>
+                </mat-form-field>
             </div>
             <div *ngIf="(enlaceForm.contains('tipoEnlace') && (enlaceForm.get('tipoEnlace').value === 2)) || enlaceForm.contains('puerto')" class="ui-g-12">
-                <!-- <mat-input placeholder="Puerto *" type="text" name="url" class="input-full-width" formControlName="puerto" [dividerColor]="!enlaceForm.controls['puerto'].valid && !enlaceForm.controls['puerto'].pristine ? 'warn' : 'primary'">
-                    <mat-hint class="md-warn" [hidden]="enlaceForm.controls['puerto'].valid || enlaceForm.controls['puerto'].pristine" align="end">
-                        <span [hidden]="!enlaceForm.controls['puerto'].hasError('required')">Campo requerido</span>
-                        <span [hidden]="!enlaceForm.controls['puerto'].hasError('pattern')">Valor incorrecto, solo dígitos [0-9]</span>
-                    </mat-hint>
-                </mat-input> -->
+                <mat-form-field class="full-width">
+                    <input placeholder="Puerto" required matInput type="text" formControlName="puerto">
+                    <mat-error *ngIf="!enlaceForm.get('puerto').hasError('required')">Campo requerido</mat-error>
+                    <mat-error *ngIf="!enlaceForm.get('puerto').hasError('pattern')">Valor incorrecto, solo dígitos [0-9]</mat-error>
+                </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <!-- <mat-input placeholder="Usuario *" type="text" class="input-full-width" formControlName="usuario" [dividerColor]="!enlaceForm.controls['usuario'].valid && !enlaceForm.controls['usuario'].pristine ? 'warn' : 'primary'">
-                    <mat-hint class="md-warn" [hidden]="enlaceForm.controls['usuario'].valid || enlaceForm.controls['usuario'].pristine" align="end">
-                        Campo requerido
-                    </mat-hint>
-                </mat-input> -->
+                <mat-form-field class="full-width">
+                    <input placeholder="Usuario" required matInput type="text" formControlName="usuario">
+                    <mat-error *ngIf="enlaceForm.get('usuario').invalid">Campo requerido</mat-error>
+                </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <div class="ui-g-11  ui-g-nopad">
-                    <!-- <mat-input placeholder="Contraseña *" [type]="(verContrasenia?'text':'password')" class="input-full-width" formControlName="contrasena" [dividerColor]="!enlaceForm.controls['contrasena'].valid && !enlaceForm.controls['contrasena'].pristine ? 'warn' : 'primary'">
-                        <mat-hint class="md-warn" [hidden]="enlaceForm.controls['contrasena'].valid || enlaceForm.controls['contrasena'].pristine" align="end">Campo requerido</mat-hint>
-                    </mat-input> -->
-                </div>
-                <div class="ui-g-1  ui-g-nopad">
-                    <mat-icon fontSet="fa" fontIcon="fa-eye" [style.color]="verContrasenia?'#000000':'#D9D9D9'" style="font-size: larger; position: relative; top: 18px" (click)="toogleVerContrasenia()">
+                <mat-form-field class="full-width">
+                    <input [type]="ocultapsw?'password':'text'" required autocomplete="password" matInput placeholder="Contraseña" formControlName="contrasena">
+                    <mat-icon inline="true" matSuffix (click)="ocultapsw = !ocultapsw" style="cursor: pointer;">
+                        {{ocultapsw? 'visibility' : 'visibility_off'}}
                     </mat-icon>
-                </div>
+                    <mat-error *ngIf="enlaceForm.get('contrasena').invalid">Campo requerido</mat-error>
+                </mat-form-field>
             </div>
             <div class="ui-g-12">
-                <!-- <mat-input placeholder="Base de datos *" type="text" class="input-full-width" formControlName="base" [dividerColor]="!enlaceForm.controls['base'].valid && !enlaceForm.controls['base'].pristine ? 'warn' : 'primary'">
-                    <mat-hint class="md-warn" [hidden]="enlaceForm.controls['base'].valid || enlaceForm.controls['base'].pristine" align="end">
-                        Campo requerido
-                    </mat-hint>
-                </mat-input> -->
+                <mat-form-field class="full-width">
+                    <input placeholder="Base de datos" required matInput type="text" formControlName="base">
+                    <mat-error *ngIf="enlaceForm.get('base').invalid">Campo requerido</mat-error>
+                </mat-form-field>
             </div>
         </form>
     </div>
     <div class="ui-g-12">
-        <button class="pull-right" [disabled]="(!datosForm.valid || (datosForm.pristine && enlaceForm.pristine))" md-raised-button color="primary" (click)="registraEntronque()">
-                    <mat-icon fontSet="fa" [fontIcon]="(entronque.Id>0?'fa-floppy-o':'fa-plus')"></mat-icon>
+        <button class="pull-right" [disabled]="(!datosForm.valid || (datosForm.pristine && enlaceForm.pristine))" mat-raised-button color="primary" (click)="registraEntronque()">
+                    <mat-icon fontSet="fa" [fontIcon]="(entronque.Id>0?'fa-floppy-o':'fa-plus')" inline="true"></mat-icon>
                     {{entronque.Id>0?'Actualizar Entronque ':'Agragar Entronque'}}{{enlaceForm.valid ? '/Enlace' : '' }}
 			</button>
     </div>

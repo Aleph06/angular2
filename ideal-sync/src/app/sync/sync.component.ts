@@ -53,7 +53,7 @@ export class SyncComponent implements OnInit, OnDestroy {
       },
       {
         nombre: 'Agencias', descripcion: 'Agencias', icon: 'store_mall_directory', items: [
-          { nombre: 'Nueva', descripcion: 'Nueva', ruta: '/agencias/nueva', icon: 'add_box' },
+          // { nombre: 'Nueva', descripcion: 'Nueva', ruta: '/agencias/nueva', icon: 'add_box' },
           { nombre: 'Administrar', descripcion: 'Administrar', ruta: '/agencias', icon: 'settings_applications' },
           { nombre: 'Cargas', descripcion: 'Cargas', ruta: '/agencias/cargas', icon: 'cloud_upload' }
         ]

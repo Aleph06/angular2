@@ -217,3 +217,7 @@ mat-card.gray {
 .menu .mat-expansion-panel-body {
     padding: 0px;
 }
+
+i-sync-entronque-agregar .ui-accordion-content {
+    border: none!important;
+}

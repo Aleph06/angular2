@@ -70,8 +70,9 @@ export class UsuariosService {
   findAll(top: number = 10, skipLoad = false): Observable<Usuario[]> {
     console.log('findAll');
     const httpOptions = skipLoad ? { headers: new HttpHeaders({ 'NV-Skip-Load': 'true' }) } : {};
-    const selectEntr = `entronques/IdEntronque,entronques/entronque/Descripcion,entronques/entronque/autopista/Nombre`;
-    const reqUrl = `${this.getUrl('getAll')}?usuario&$expand=entronques/entronque/autopista&$select=Id,usuario,${selectEntr}`;
+    const selectEntr = `entronques/IdEntronque,entronques/entronque/Descripcion,entronques/entronque/Id,`;
+    const selectAuth = `entronques/entronque/autopista/Nombre`;
+    const reqUrl = `${this.getUrl('getAll')}?usuario&$expand=entronques/entronque/autopista&$select=Id,usuario,${selectEntr}${selectAuth}`;
     return this.http
       .get<any[]>(reqUrl, httpOptions)
       .pipe(
@@ -79,7 +80,10 @@ export class UsuariosService {
           return uany.map(u => <Usuario>{
             usuario: u.usuario, Id: u.Id,
             entronques: (<any[]>u.entronques).map(eany => {
-              return { IdEntronque: eany.IdEntronque, autopista: eany.entronque.autopista, Descripcion: eany.entronque.Descripcion };
+              return {
+                IdEntronque: eany.IdEntronque, autopista: eany.entronque.autopista,
+                Descripcion: eany.entronque.Descripcion, Id: eany.entronque.Id
+              };
             })
           });
         })

@@ -67,7 +67,7 @@ export class AutopistasService {
 
     private handleError(error: any) {
         console.error('An error occurred', error);
-        return Promise.reject(error.json() || error);
+        return Promise.reject(error || JSON.stringify(error));
     }
 
 }

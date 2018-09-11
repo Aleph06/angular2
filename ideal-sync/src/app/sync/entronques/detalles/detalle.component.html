@@ -1,5 +1,5 @@
 <p-panel *ngIf="entronque">
-    <header>
+    <p-header>
         <div class="ui-g  ui-g-nopad">
             <div class="ui-g-2  ui-g-nopad">
                 {{ (entronque.Id > 0)? entronque.Descripcion :'Nuevo' }}
@@ -11,7 +11,7 @@
                 </mat-checkbox>
             </div>
         </div>
-    </header>
+    </p-header>
     <i-sync-entronque-editar *ngIf="entronque.Id > 0" [entronque]="entronque" (updateEntronque)="updateMain($event)"></i-sync-entronque-editar>
     <i-sync-entronque-agregar *ngIf="entronque.Id <= 0" [entronque]="entronque"></i-sync-entronque-agregar>
 </p-panel>

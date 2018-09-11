@@ -5,30 +5,33 @@
                 <ng-template mat-tab-label>
                     <h5 style="font-weight: bold">Conexión</h5>
                 </ng-template>
-                <ng-template mat-tab-content>
-                    <i-sync-entronque-datos [entronque]="entronque" (entronqueNuevo)="entronqueActualizado($event)"></i-sync-entronque-datos>
+                <ng-template mat-tab-label>
+                    The <em>best</em> pasta
                 </ng-template>
+                <!-- <ng-template mat-tab-content> -->
+                <i-sync-entronque-datos [entronque]="entronque" (entronqueNuevo)="entronqueActualizado($event)"></i-sync-entronque-datos>
+                <!-- </ng-template> -->
             </mat-tab>
             <mat-tab>
                 <ng-template mat-tab-label>
                     <h5 style="font-weight: bold">Consulta, Destino, Filtros</h5>
                 </ng-template>
-                <ng-template mat-tab-content>
-                    <div class="ui-g  ui-grid-responsive ui-fluid ui-g-nopad">
-                        <div class="ui-g-12">
-                            <i-sync-entronque-base [baseOrigen]="entronque.baseOrigen" (sqlValid)="sqlValid($event)"></i-sync-entronque-base>
-                        </div>
+                <!-- <ng-template mat-tab-content> -->
+                <div class="ui-g  ui-grid-responsive ui-fluid ui-g-nopad">
+                    <div class="ui-g-12">
+                        <i-sync-entronque-base [baseOrigen]="entronque.baseOrigen" (sqlValid)="sqlValid($event)"></i-sync-entronque-base>
                     </div>
-                </ng-template>
+                </div>
+                <!-- </ng-template> -->
             </mat-tab>
             <mat-tab>
                 <ng-template mat-tab-label>
                     <h5 style="font-weight: bold">Permisos</h5>
                 </ng-template>
-                <ng-template mat-tab-content>
-                    <p>Lista de usuarios con permisos</p>
-                    <i-sync-permisos-entronque [entronque]="entronque"></i-sync-permisos-entronque>
-                </ng-template>
+                <!-- <ng-template mat-tab-content> -->
+                <p>Lista de usuarios con permisos</p>
+                <i-sync-permisos-entronque [entronque]="entronque"></i-sync-permisos-entronque>
+                <!-- </ng-template> -->
             </mat-tab>
         </mat-tab-group>
     </div>

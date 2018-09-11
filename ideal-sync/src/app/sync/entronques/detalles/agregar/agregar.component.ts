@@ -7,7 +7,8 @@ import { Entronque } from '../../shared';
 
 @Component({
   selector: 'i-sync-entronque-agregar',
-  templateUrl: './agregar.component.html'
+  templateUrl: './agregar.component.html',
+  styles:[``]
 })
 export class AgregarComponent implements OnInit {
 
@@ -36,7 +37,7 @@ export class AgregarComponent implements OnInit {
             })
               .subscribe(respuesta => {
                 if (respuesta) {
-                  this._router.navigate(['/entronques/detalle', {
+                  this._router.navigate(['agencias', 'detalle', {
                     idAutopista: this.entronque.IdGrupo,
                     id: this.entronque.Id
                   }]);
@@ -62,7 +63,7 @@ export class AgregarComponent implements OnInit {
             })
               .subscribe(respuesta => {
                 if (respuesta) {
-                  this._router.navigate(['/entronques/detalle', {
+                  this._router.navigate(['agencias', 'detalle', {
                     idAutopista: this.entronque.IdGrupo,
                     id: this.entronque.Id
                   }]);

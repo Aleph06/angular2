@@ -24,7 +24,7 @@ export class EntronqueResolve implements Resolve<Entronque> {
                 if (entronque) {
                     return entronque;
                 } else {
-                    this.router.navigate(['/entronques']);
+                    this.router.navigate(['agencias']);
                     return undefined;
                 }
             });

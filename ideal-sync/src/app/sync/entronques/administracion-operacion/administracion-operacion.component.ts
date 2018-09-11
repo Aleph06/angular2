@@ -30,6 +30,12 @@ export class EntronqueAdminOperaComponent implements OnInit {
 
     es: any;
 
+    cols = [
+        { header: 'Identificador', field: 'IdEntronque' },
+        { header: 'Nombre', field: 'Descripcion' },
+        { header: 'Estatus', field: 'Estatus' }
+    ];
+
     constructor(private _builder: FormBuilder,
         private autopistasService: AutopistasService,
         private entronquesService: EntronquesService,
@@ -51,7 +57,17 @@ export class EntronqueAdminOperaComponent implements OnInit {
         this.procesoForm = this._builder.group({
             fecha: [this.fHoy, Validators.required]
         });
-        // this.es = PrimeFacesLocales.ES;
+        this.es = {
+            firstDayOfWeek: 1,
+            dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+            monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            today: 'Hoy',
+            clear: 'Borrar'
+        };
     }
 
     private actualizaAutopistas() {
@@ -69,14 +85,14 @@ export class EntronqueAdminOperaComponent implements OnInit {
     }
 
     editar() {
-        this.router.navigate(['/entronques/detalle', {
+        this.router.navigate(['agencias', 'detalle', {
             idAutopista: this.entronqueSeleccionado.IdGrupo,
             id: this.entronqueSeleccionado.Id
         }]);
     }
 
     nuevo() {
-        this.router.navigate(['/entronques/detalle', { idAutopista: +this.autopistaSel }]);
+        this.router.navigate(['agencias', 'detalle', { idAutopista: +this.autopistaSel }]);
     }
 
     get seleccionado() {
@@ -126,6 +142,7 @@ export class EntronqueAdminOperaComponent implements OnInit {
 
     seleccionaAutopista() {
         if (+this.autopistaSel > 0) {
+            this.autopistaSeleccionada = this.autopistas.find(a => a.Id === +this.autopistaSel);
             this.actualizaEntronques();
         } else {
             if (this.entronques) { this.entronques.length = 0; }
@@ -144,7 +161,7 @@ export class EntronqueAdminOperaComponent implements OnInit {
     }
 
     cargarDatos() {
-        this.router.navigate(['/entronques/cargas', {
+        this.router.navigate(['agencias', 'cargas', {
             idAutopista: this.entronqueSeleccionado.IdGrupo,
             id: this.entronqueSeleccionado.Id
         }]);

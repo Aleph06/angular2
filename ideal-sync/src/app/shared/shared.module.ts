@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CookieModule } from 'ngx-cookie';
 import { StoreManagement, LoginService, HeaderInterceptor } from './services';
-import { SafeHtmlPipe, TruncatePipe, NullPipe, FormErrorsPipe, ChildArrayLengthPipe } from './pipes';
+import { SafeHtmlPipe, TruncatePipe, NullPipe, FormErrorsPipe, ChildArrayLengthPipe, SafeStylePipe } from './pipes';
 import {
     MensajesComponent, DialogoCargaComponent, DialogoConfirmacionComponent, FadeInOutComponent,
     CargandoService, ConfirmacionService, MensajesService, Slider2Component, Slider3Component
@@ -15,11 +15,11 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [MensajesComponent, DialogoCargaComponent, DialogoConfirmacionComponent, FadeInOutComponent,
-        NullPipe, TruncatePipe, SafeHtmlPipe, FormErrorsPipe, Slider2Component, Slider3Component, ChildArrayLengthPipe],
+        NullPipe, TruncatePipe, SafeHtmlPipe, SafeStylePipe, FormErrorsPipe, Slider2Component, Slider3Component, ChildArrayLengthPipe],
     imports: [CommonModule, FlexLayoutModule, FormsModule, ReactiveFormsModule, CookieModule.forRoot(),
         SessionModule.forRoot(), SecurityModule, MaterialSyncModule],
     exports: [MensajesComponent, DialogoCargaComponent, DialogoConfirmacionComponent, FadeInOutComponent,
-        NullPipe, TruncatePipe, SafeHtmlPipe, FormErrorsPipe, Slider2Component, Slider3Component, ChildArrayLengthPipe],
+        NullPipe, TruncatePipe, SafeHtmlPipe, SafeStylePipe, FormErrorsPipe, Slider2Component, Slider3Component, ChildArrayLengthPipe],
     entryComponents: [DialogoCargaComponent, DialogoConfirmacionComponent, MensajesComponent]
 })
 export class SharedModule {

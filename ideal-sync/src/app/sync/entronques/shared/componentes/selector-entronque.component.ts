@@ -18,6 +18,7 @@ export class SelectorEntronqueComponent implements OnInit {
     @Input('entronque') private entronque: Entronque;
     @Output() change = new EventEmitter<Entronque>();
     @Input('showEntronques') showEntronques = true;
+    @Input('excluir') excluir: Entronque[] = [];
 
     constructor(private _autopistasSrv: AutopistasService,
         private _entronquesSrv: EntronquesService,
@@ -27,7 +28,7 @@ export class SelectorEntronqueComponent implements OnInit {
         private _authService: AuthService) { }
 
     ngOnInit(): void {
-        console.log('entroque:init', this.entronque);
+        // console.log('entroque:init', this.entronque);
         this.selectorForm = this._builder.group({
             idAutopistaStr: [(this.entronque && this.entronque != null ? this.entronque.IdGrupo : null), Validators.required],
             idEntronqueStr: [(this.entronque && this.entronque != null ? this.entronque.Id : null), Validators.required]
@@ -73,18 +74,30 @@ export class SelectorEntronqueComponent implements OnInit {
         this.entronquesItems.push(this.nullItem);
         this._entronquesSrv.getEntronqueByidAutopista(idAutopista)
             .then(entronques => {
-                entronques.forEach(entronque => {
-                    // if (this._authService.hasPrivEntronque(entronque.Id)) {
-                        this.entronquesItems.push({ value: entronque.Id, label: entronque.Descripcion });
-                    // }
+                entronques.filter(ef => {
+                    // console.log('excluir', this.excluir);
+                    if (this.excluir && this.excluir.length > 0) {
+                        return !(this.excluir.map(ee => ee.Id).includes(ef.Id));
+                    } else {
+                        return true;
+                    }
+                }).forEach(entronque => {
+                    // console.log('incluye', entronque);
+                    this.entronquesItems.push({ value: entronque.Id, label: entronque.Descripcion });
                 });
                 if (!this.showEntronques) {
-                    if (this.entronquesItems.length > 1) {
+                    if (this.entronquesItems.length > 0) {
                         this.selectorForm.get('idEntronqueStr').setValue(String(this.entronquesItems[1].value));
                         this.seleccionaEntronque();
                     } else {
                         this._mensajesSrv.agregaWarn('Autopista no tiene entronques registrados');
                     }
+                }
+                if (this.entronquesItems.length > 0) {
+                    this.selectorForm.get('idEntronqueStr').disable();
+                    this._mensajesSrv.agregaInfo(`Ya se asiganaron todos los entronques.`);
+                } else {
+                    this.selectorForm.get('idEntronqueStr').enable();
                 }
             })
             .catch(error => {

@@ -22,7 +22,7 @@ export class DatosComponent implements OnInit {
     autopistas: Autopista[];
     esConexionCorrecta = false;
     tiposEnlace: SelectItem[];
-    verContrasenia = false;
+    ocultapsw = true;
 
     constructor(private _builder: FormBuilder,
         private _autopistasService: AutopistasService,
@@ -74,10 +74,6 @@ export class DatosComponent implements OnInit {
         } else {
             this.confirmarAgregar();
         }
-    }
-
-    toogleVerContrasenia() {
-        this.verContrasenia = !this.verContrasenia;
     }
 
     private buildItemsAutopistas(): void {

@@ -15,10 +15,11 @@ export class PermisosUsuariosComponent implements OnInit {
     entronqueSeleccionado: Entronque;
     selectorEntronqueOn = true;
     cols = [
-        { field: 'autopista', subField: 'Nombre', header: 'Autopista/Grupo' },
+        { field: 'NombreAutopista', header: 'Autopista/Grupo' },
         { field: 'IdEntronque', header: 'Identificador' },
         { field: 'Descripcion', header: 'Nombre' }
     ];
+    entronques: any[] = [];
 
     constructor(
         private _cargandoService: CargandoService,
@@ -33,8 +34,15 @@ export class PermisosUsuariosComponent implements OnInit {
     }
 
     setUsuario(usuario: Usuario) {
-        console.log('set', usuario);
         this.usuarioSeleccionado = usuario;
+        if (usuario && usuario.entronques && usuario.entronques.length) {
+            this.entronques = usuario.entronques.map(eany => {
+                return {
+                    Id: eany.Id, NombreAutopista: eany.autopista.Nombre,
+                    IdEntronque: eany.IdEntronque, Descripcion: eany.Descripcion
+                };
+            });
+        }
     }
 
     setEntronque(entronque: Entronque) {

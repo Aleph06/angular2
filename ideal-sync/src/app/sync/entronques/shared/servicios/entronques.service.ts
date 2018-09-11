@@ -106,7 +106,7 @@ export class EntronquesService {
 
     private post(entronque: Entronque): Promise<Entronque> {
         return this.http
-            .post<Entronque>(this.entronquesUrl, JSON.stringify(entronque))
+            .post<Entronque>(this.entronquesUrl, entronque)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -132,7 +132,7 @@ export class EntronquesService {
 
     private handleError(error: any) {
         console.error('An error occurred', error);
-        return Promise.reject(error.json() || error);
+        return Promise.reject(error || JSON.stringify(error));
     }
 
 }

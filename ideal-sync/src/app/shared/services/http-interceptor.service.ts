@@ -47,6 +47,13 @@ export class HeaderInterceptor implements HttpInterceptor {
         if (!req.headers.has('NV-Skip-Load')) {
             this.loadSrv.toggle(true);
         }
+        if (!req.headers.has('Content-Type')) {
+            req = req.clone({
+                setHeaders: {
+                    'Content-Type': `application/json; charset=utf-8`
+                }
+            });
+        }
         return next.handle(req)
             .pipe(
                 tap((event: HttpEvent<any>) => {
