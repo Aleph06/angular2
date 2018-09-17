@@ -19,7 +19,7 @@
                 <!-- <ng-template mat-tab-content> -->
                 <div class="ui-g  ui-grid-responsive ui-fluid ui-g-nopad">
                     <div class="ui-g-12">
-                        <i-sync-entronque-base [baseOrigen]="entronque.baseOrigen" (sqlValid)="sqlValid($event)"></i-sync-entronque-base>
+                        <i-sync-entronque-base [idBaseOrigen]="entronque.IdbaseOrigen" (sqlValid)="sqlValid($event)"></i-sync-entronque-base>
                     </div>
                 </div>
                 <!-- </ng-template> -->
@@ -29,7 +29,6 @@
                     <h5 style="font-weight: bold">Permisos</h5>
                 </ng-template>
                 <!-- <ng-template mat-tab-content> -->
-                <p>Lista de usuarios con permisos</p>
                 <i-sync-permisos-entronque [entronque]="entronque"></i-sync-permisos-entronque>
                 <!-- </ng-template> -->
             </mat-tab>

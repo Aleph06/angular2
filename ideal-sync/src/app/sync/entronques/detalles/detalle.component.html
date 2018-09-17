@@ -5,10 +5,8 @@
                 {{ (entronque.Id > 0)? entronque.Descripcion :'Nuevo' }}
             </div>
             <div class="ui-g-9 ui-g-nopad"></div>
-            <div *ngIf="entronque.Id > 0" class="ui-g-1 ui-g-nopad" style="text-align: right; font-size: small; position: relative; top: 7px;">
-                <mat-checkbox [(ngModel)]="entronque.Estatus" align="end" (change)="activar($event.checked)">
-                    {{entronque.Estatus?'Activo':'Inactivo'}}
-                </mat-checkbox>
+            <div *ngIf="entronque.Id > 0" class="ui-g-1 ui-g-nopad">
+                <mat-checkbox [(ngModel)]="entronque.Estatus" (change)="activar($event.checked)">{{entronque.Estatus?'Activo':'Inactivo'}}</mat-checkbox>
             </div>
         </div>
     </p-header>

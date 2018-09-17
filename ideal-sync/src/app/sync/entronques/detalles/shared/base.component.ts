@@ -10,9 +10,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class BaseComponent implements OnInit {
 
-    @Input() baseOrigen: Base;
+    @Input() idBaseOrigen: number;
     baseForm: FormGroup;
     @Output() sqlValid = new EventEmitter<Base>();
+    @Input() baseOrigen: Base;
 
     constructor(private _builder: FormBuilder,
         private titleService: Title,
@@ -29,7 +30,7 @@ export class BaseComponent implements OnInit {
     }
 
     private cargaBaseOrigen(): void {
-        this._basesService.getBaseByid(this.baseOrigen.Id)
+        this._basesService.getBaseByid(this.idBaseOrigen)
             .then(bs => {
                 this.baseOrigen = bs;
                 this.fillForm();

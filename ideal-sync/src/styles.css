@@ -221,3 +221,19 @@ mat-card.gray {
 i-sync-entronque-agregar .ui-accordion-content {
     border: none!important;
 }
+
+i-sync-entronque-detalle div.ui-panel-titlebar .mat-checkbox-frame {
+    border-color: #ffffff;
+}
+
+th.dt-filter>input[pinputtext] {
+    font-size: 12px;
+}
+
+div.mat-tab-body-content {
+    overflow: visible;
+}
+
+mat-tab-body.mat-tab-body.mat-tab-body-active {
+    overflow: visible;
+}

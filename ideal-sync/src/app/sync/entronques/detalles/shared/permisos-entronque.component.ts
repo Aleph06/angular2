@@ -15,6 +15,10 @@ export class PermisosEntronqueComponent implements OnInit {
     usuario: Usuario;
     @Input('entronque') entronque: Entronque;
     selectorEntronqueOn = true;
+    cols = [
+        { field: 'Id', header: 'Identificador' },
+        { field: 'usuario', header: 'Nombre' }
+    ];
 
     constructor(private titleService: Title,
         private _cargandoService: CargandoService,
@@ -69,6 +73,7 @@ export class PermisosEntronqueComponent implements OnInit {
     }
 
     agregarPermiso() {
+        console.log('aqui>>');
         const permiso = this.entronque.usuarios.find(u => u.Id === this.usuario.Id);
         if (permiso === undefined) {
             this.dialogoConfirmacionService.confirmar({

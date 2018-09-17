@@ -36,7 +36,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th *ngFor="let col of columns">
+                    <th *ngFor="let col of columns" class="dt-filter">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, col.field)">
                     </th>
                 </tr>
