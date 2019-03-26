@@ -1,0 +1,41 @@
+<div>
+  <br>
+  <mat-card>
+    <button mat-raised-button color="primary" routerLink="/create">Create New Issue</button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-table style="width: 95%;" [dataSource]="issues">
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="responsible">
+        <mat-header-cell *matHeaderCellDef> Responsible </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.responsible}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="severity">
+        <mat-header-cell *matHeaderCellDef> Severity </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.severity}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="mat-column-right">
+          <button mat-button color="primary" (click)="editIssue(element._id)">Edit</button>
+          <button mat-button color="warn" (click)="deleteIssue(element._id)">Delete</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card>
+</div>
