@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
       responsible: '',
       description: '',
       severity: ['', Validators.required],
-      status: ''
+      status: ['', Validators.required],
     });
   }
 

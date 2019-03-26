@@ -1,41 +1,46 @@
 <div>
   <br>
   <mat-card>
-    <button mat-raised-button color="primary" routerLink="/create">Create New Issue</button>
+    <button mat-raised-button color="primary" routerLink="/create">Crear Nuevo</button>
+    &nbsp;
+    <button mat-raised-button color="accent" [disabled]="selection.isEmpty()" (click)="editIssue()">Editar</button>
+    &nbsp;
+    <button mat-raised-button color="warn" [disabled]="selection.isEmpty()" (click)="deleteIssue()">Eliminar</button>
     <br><br>
     <mat-divider></mat-divider>
     <br>
-    <mat-table style="width: 95%;" [dataSource]="issues">
+    <mat-table [dataSource]="issues" matSort>
       <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Titulo </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="responsible">
-        <mat-header-cell *matHeaderCellDef> Responsible </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Responsable </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.responsible}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="severity">
-        <mat-header-cell *matHeaderCellDef> Severity </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Severidad </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.severity}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-right"> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element" class="mat-column-right">
-          <button mat-button color="primary" (click)="editIssue(element._id)">Edit</button>
-          <button mat-button color="warn" (click)="deleteIssue(element._id)">Delete</button>
+          <button mat-button color="primary" (click)="editIssue(element._id)">Editar</button>
+          <button mat-button color="warn" (click)="deleteIssue(element._id)">Eliminar</button>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="select(row)" matRipple
+        [class.selected]="selection.isSelected(row)"></mat-row>
     </mat-table>
   </mat-card>
 </div>

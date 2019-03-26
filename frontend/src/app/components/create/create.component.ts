@@ -20,7 +20,7 @@ export class CreateComponent implements OnInit {
       title: ['', Validators.required],
       responsible: '',
       description: '',
-      severity: ['', Validators.required]
+      severity: ['Low', Validators.required]
     });
   }
 
