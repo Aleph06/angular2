@@ -1,5 +1,0 @@
-export * from './pipes'
-export * from './utils'
-export * from './servicios'
-export * from './componentes'
-export * from './mnx-bitacoras-cdc-shared.module'
